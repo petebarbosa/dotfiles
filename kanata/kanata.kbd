@@ -16,7 +16,7 @@
   s-mod (tap-hold $tap-time $hold-time s lalt)
   d-mod (tap-hold $tap-time $hold-time d lsft)
   f-mod (tap-hold $tap-time $hold-time f lctl)
-  j-mod (tap-hold $tap-time $hold-time j rclt)
+  j-mod (tap-hold $tap-time $hold-time j rctl)
   k-mod (tap-hold $tap-time $hold-time k rsft)
   l-mod (tap-hold $tap-time $hold-time l ralt)
   ;-mod (tap-hold $tap-time $hold-time ; rmet)
