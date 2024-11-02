@@ -1,0 +1,10 @@
+[Unit]
+Description=Kanata Service
+
+[Service]
+ExecStart=/opt/kanata/kanata --cfg ~/.config/kanata/kanata.kbd
+Restart=on-failure
+User=pedro-b
+
+[Install]
+WantedBy=default.target
