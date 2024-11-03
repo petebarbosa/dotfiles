@@ -3,12 +3,21 @@
 )
 
 (defsrc
-  a s d f j k l ;
+  caps a s d f h j k l ;
+)
+
+(deflayer base
+  @caps-mod @a-mod @s-mod @d-mod @f-mod h @j-mod @k-mod @l-mod @;-mod
+)
+
+(deflayer arrows-nav
+  caps a s d f left down up right ;
 )
 
 (defvar
   tap-time 200
   hold-time 200
+  time-out 200
 )
 
 (defalias
@@ -20,8 +29,8 @@
   k-mod (tap-hold $tap-time $hold-time k rsft)
   l-mod (tap-hold $tap-time $hold-time l ralt)
   ;-mod (tap-hold $tap-time $hold-time ; rmet)
-)
-
-(deflayer base
-  @a-mod @s-mod @d-mod @f-mod @j-mod @k-mod @l-mod @;-mod
+  
+  caps-hold (layer-while-held arrows-nav)
+  caps-dance (tap-dance 150 (esc caps))
+  caps-mod (tap-hold $tap-time $hold-time caps @caps-hold)
 )
