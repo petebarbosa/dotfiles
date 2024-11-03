@@ -1,10 +1,11 @@
 [Unit]
 Description=Kanata Service
+Requires=local-fs.target
+After=local-fs.target
 
 [Service]
-ExecStart=/opt/kanata/kanata --cfg ~/.config/kanata/kanata.kbd
-Restart=on-failure
-User=pedro-b
+ExecStart=/usr/bin/kanata -c /home/YOUR_USERNAME/.config/kanata/kanata.kbd
+Restart=no
 
 [Install]
-WantedBy=default.target
+WantedBy=sysinit.target
