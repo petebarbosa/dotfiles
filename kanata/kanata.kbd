@@ -28,8 +28,8 @@
   j-mod (tap-hold $tap-time $hold-time j rctl)
   k-mod (tap-hold $tap-time $hold-time k rsft)
   l-mod (tap-hold $tap-time $hold-time l ralt)
-  ;-mod (tap-hold $tap-time $hold-time ; rmet)
-  
+  ;-mod (tap-hold $tap-time $hold-time ; lmet)
+
   caps-hold (layer-while-held arrows-nav)
   caps-dance (tap-dance 150 (esc caps))
   caps-mod (tap-hold $tap-time $hold-time caps @caps-hold)
