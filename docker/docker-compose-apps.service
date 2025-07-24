@@ -1,0 +1,16 @@
+[Unit]
+Description=Docker Compose Applications
+After=docker.service network-online.target
+Requires=docker.service
+
+[Service]
+User=pedro-barbosa
+Group=pedro-barbosa
+WorkingDirectory=/home/pedro-barbosa/.dotfiles/docker/
+
+ExecStart=/bin/bash /home/pedro-barbosa/.dotfiles/docker/up.sh up -d
+
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
