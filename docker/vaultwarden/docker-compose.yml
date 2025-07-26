@@ -2,9 +2,9 @@ services:
   vaultwarden:
     image: vaultwarden/server:latest
     container_name: vaultwarden
-    restart: unless-stopped
+    restart: no 
     environment:
-      - DOMAIN=https://vault.local
+      - DOMAIN=${DOMAIN}
     volumes:
       - ./vw-data:/data
     labels:

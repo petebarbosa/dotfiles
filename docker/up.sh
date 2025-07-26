@@ -9,17 +9,21 @@ else
   echo "Network '$NETWORK_NAME' already exists."
 fi
 
+# Load environment variables from all .env files
 for env_file in $(find . -mindepth 2 -name '.env'); do
   echo "Loading environment variables from $env_file"
-  export $(grep -v '^#' "$env_file" | xargs)
+  set -a
+  source "$env_file"
+  set +a
 done
 
-COMMAND="docker compose"
+# Build Docker Compose command
+COMPOSE_FILES=""
 for f in $(find . -mindepth 2 -name 'docker-compose.yml'); do
-  COMMAND+=" -f $f"
+  COMPOSE_FILES+=" -f $f"
 done
 
-COMMAND+=" $@"
+COMMAND="docker compose$COMPOSE_FILES $@"
 
 echo "Running command: $COMMAND"
 eval $COMMAND
