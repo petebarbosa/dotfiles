@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily Docker Services Backup Timer
+Requires=docker-backup.service
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+RandomizedDelaySec=1h
+
+[Install]
+WantedBy=timers.target

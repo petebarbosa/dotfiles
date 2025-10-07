@@ -1,0 +1,15 @@
+[Unit]
+Description=Daily Docker Services Backup
+After=docker-compose-apps.service
+Wants=docker-compose-apps.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/.dotfiles/docker
+ExecStart=/bin/bash %h/.dotfiles/docker/backup.sh auto
+TimeoutStartSec=600
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

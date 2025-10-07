@@ -1,0 +1,19 @@
+[Unit]
+Description=Self-Hosted Docker Applications
+After=docker.service network-online.target
+Requires=docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=%h/.dotfiles/docker
+ExecStart=/bin/bash %h/.dotfiles/docker/up.sh up -d
+ExecStop=/bin/bash %h/.dotfiles/docker/up.sh down
+ExecReload=/bin/bash %h/.dotfiles/docker/up.sh restart
+TimeoutStartSec=300
+TimeoutStopSec=120
+Restart=no
+
+[Install]
+WantedBy=default.target
