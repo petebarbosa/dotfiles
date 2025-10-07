@@ -154,44 +154,48 @@ setup_docker() {
     local current_user=$(whoami)
     sudo usermod -aG docker "$current_user"
     
-    log "Setting up Docker auto-start service..."
-    local service_file="$SCRIPT_DIR/docker/docker-compose-apps.service"
-
-    if [[ ! -f "$service_file" ]]; then
-        error "Docker service file not found: $service_file"
-    fi
-
-    log "Updating user placeholder in Docker service file..."
-    update_file_placeholder "$service_file"
-
-    # Install systemd service using symlink
-    sudo ln -sf "$service_file" "/etc/systemd/system/docker-compose-apps.service"
+    log "Setting up systemd user services..."
     
-    # Install backup service and timer
-    local backup_service_file="$SCRIPT_DIR/docker/docker-backup.service"
-    local backup_timer_file="$SCRIPT_DIR/docker/docker-backup.timer"
+    # Create user systemd directory
+    mkdir -p "$HOME/.config/systemd/user"
     
-    if [[ -f "$backup_service_file" ]]; then
-        log "Installing backup service..."
-        update_file_placeholder "$backup_service_file"
-        sudo ln -sf "$backup_service_file" "/etc/systemd/system/docker-backup.service"
+    # Copy service files from examples
+    local docker_dir="$SCRIPT_DIR/docker"
+    
+    if [[ ! -f "$docker_dir/docker-compose-apps.service.example" ]]; then
+        error "Service template not found: $docker_dir/docker-compose-apps.service.example"
     fi
     
-    if [[ -f "$backup_timer_file" ]]; then
-        log "Installing backup timer..."
-        sudo ln -sf "$backup_timer_file" "/etc/systemd/system/docker-backup.timer"
+    log "Creating service files from templates..."
+    cp "$docker_dir/docker-compose-apps.service.example" "$docker_dir/docker-compose-apps.service"
+    cp "$docker_dir/docker-backup.service.example" "$docker_dir/docker-backup.service"
+    cp "$docker_dir/docker-backup.timer.example" "$docker_dir/docker-backup.timer"
+    
+    # If dotfiles are not in the default location, update the service files
+    if [[ "$SCRIPT_DIR" != "$HOME/.dotfiles" ]]; then
+        log "Updating service files with custom dotfiles path: $SCRIPT_DIR"
+        sed -i "s|%h/.dotfiles|$SCRIPT_DIR|g" "$docker_dir/docker-compose-apps.service"
+        sed -i "s|%h/.dotfiles|$SCRIPT_DIR|g" "$docker_dir/docker-backup.service"
     fi
     
-    sudo systemctl daemon-reload
-    sudo systemctl enable docker-compose-apps.service
-    sudo systemctl enable docker-backup.timer
+    # Install user services
+    log "Installing systemd user services..."
+    cp "$docker_dir/docker-compose-apps.service" "$HOME/.config/systemd/user/"
+    cp "$docker_dir/docker-backup.service" "$HOME/.config/systemd/user/"
+    cp "$docker_dir/docker-backup.timer" "$HOME/.config/systemd/user/"
     
-    # Start the backup timer immediately (don't wait for next boot)
-    sudo systemctl start docker-backup.timer
+    # Reload and enable user services
+    systemctl --user daemon-reload
+    systemctl --user enable docker-compose-apps.service
+    systemctl --user enable docker-backup.timer
     
-    success "Docker service configured and enabled!"
-    success "Backup timer started and will run daily at 2:00 AM"
+    # Start the backup timer immediately
+    systemctl --user start docker-backup.timer
+    
+    success "Docker user services configured and enabled!"
+    success "Backup timer started and will run daily"
     warn "You'll need to log out and back in for Docker group membership to take effect."
+    info "Services will start automatically when you log in."
 }
 
 collect_configuration() {
@@ -648,11 +652,11 @@ show_post_install_info() {
     echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     info "Useful Commands:"
     echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo "Service Management:"
-    echo "  sudo systemctl status docker-compose-apps.service"
-    echo "  sudo systemctl start docker-compose-apps.service"
-    echo "  sudo systemctl stop docker-compose-apps.service"
-    echo "  sudo systemctl restart docker-compose-apps.service"
+    echo "Service Management (user services, no sudo needed):"
+    echo "  systemctl --user status docker-compose-apps.service"
+    echo "  systemctl --user start docker-compose-apps.service"
+    echo "  systemctl --user stop docker-compose-apps.service"
+    echo "  systemctl --user restart docker-compose-apps.service"
     echo
     echo "Docker Commands (from docker/ directory):"
     echo "  ./up.sh up -d          # Start all services"
@@ -661,10 +665,11 @@ show_post_install_info() {
     echo "  ./up.sh logs -f        # Follow logs"
     echo
     echo "Backup Commands (from docker/ directory):"
-    echo "  sudo systemctl status docker-backup.timer"
-    echo "  sudo systemctl start docker-backup.service  # Manual backup"
-    echo "  journalctl -u docker-backup.service -f      # View backup logs"
-    echo "  ./backup.sh force                           # Force backup"
+    echo "  systemctl --user status docker-backup.timer"
+    echo "  systemctl --user list-timers              # Check next backup time"
+    echo "  systemctl --user start docker-backup.service  # Manual backup"
+    echo "  journalctl --user -u docker-backup.service -f # View backup logs"
+    echo "  ./backup.sh force                             # Force backup"
     echo
     echo "Configuration:"
     echo "  Configuration file: $SCRIPT_DIR/docker/.env"

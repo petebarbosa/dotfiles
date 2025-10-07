@@ -1,5 +1,9 @@
 **/.env
 **/.env.*
-!**/.env.example
 **/vw-data/
 **/letsencrypt/
+# User-specific systemd service files (use .example templates)
+docker/*.service
+docker/*.timer
+!docker/*.service.example
+!docker/*.timer.example
