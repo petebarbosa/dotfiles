@@ -2,17 +2,44 @@ services:
   vaultwarden:
     image: vaultwarden/server:latest
     container_name: vaultwarden
-    restart: no 
+    restart: unless-stopped
     environment:
-      - DOMAIN=${DOMAIN}
+      - DOMAIN=https://${VAULTWARDEN_DOMAIN}
+      - ADMIN_TOKEN=${VAULTWARDEN_ADMIN_TOKEN}
+      - SMTP_HOST=${VAULTWARDEN_SMTP_HOST}
+      - SMTP_FROM=${VAULTWARDEN_SMTP_FROM}
+      - SMTP_PORT=587
+      - SMTP_SECURITY=starttls
+      - SMTP_USERNAME=${VAULTWARDEN_SMTP_USERNAME}
+      - SMTP_PASSWORD=${VAULTWARDEN_SMTP_PASSWORD}
+      - SIGNUPS_ALLOWED=false
+      - INVITATIONS_ALLOWED=true
+      - SHOW_PASSWORD_HINT=false
+      - WEB_VAULT_ENABLED=true
+      - WEBSOCKET_ENABLED=true
+      - LOG_LEVEL=info
+      - EXTENDED_LOGGING=true
     volumes:
       - ./vw-data:/data
     labels:
       - traefik.enable=true
-      - traefik.http.routers.vaultwarden.rule=Host(`vault.local`)
-      - traefik.http.routers.vaultwarden.entrypoints=web
+      # Main web interface
+      - traefik.http.routers.vaultwarden.rule=Host(`${VAULTWARDEN_DOMAIN}`)
+      - traefik.http.routers.vaultwarden.entrypoints=websecure
       - traefik.http.routers.vaultwarden.service=vaultwarden-svc
-      - traefik.http.services.vaultwarden-svc.loadbalancer.healthcheck.path=/alive
+      - traefik.http.routers.vaultwarden.tls.certresolver=letsencrypt
+      - traefik.http.services.vaultwarden-svc.loadbalancer.server.port=80
+      # WebSocket for live sync
+      - traefik.http.routers.vaultwarden-ws.rule=Host(`${VAULTWARDEN_DOMAIN}`) && Path(`/notifications/hub`)
+      - traefik.http.routers.vaultwarden-ws.entrypoints=websecure
+      - traefik.http.routers.vaultwarden-ws.service=vaultwarden-ws-svc
+      - traefik.http.routers.vaultwarden-ws.tls.certresolver=letsencrypt
+      - traefik.http.services.vaultwarden-ws-svc.loadbalancer.server.port=3012
+      # Security headers
+      - traefik.http.routers.vaultwarden.middlewares=vaultwarden-security
+      - traefik.http.middlewares.vaultwarden-security.headers.customRequestHeaders.X-Real-IP=
+      - traefik.http.middlewares.vaultwarden-security.headers.customRequestHeaders.X-Forwarded-Proto=https
+      - traefik.http.middlewares.vaultwarden-security.headers.customRequestHeaders.X-Forwarded-Ssl=on
     networks:
       - traefik_network
 
