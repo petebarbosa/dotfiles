@@ -96,7 +96,6 @@ install_dependencies() {
         "git"
         "curl"
         "wget"
-        "neovim"
         "htop"
         "tree"
         "unzip"
@@ -565,26 +564,6 @@ setup_bash() {
     success "Bash configuration completed!"
 }
 
-setup_nvim() {
-    log "Setting up Neovim configuration..."
-    
-    local nvim_dir="$SCRIPT_DIR/nvim"
-    
-    if [[ ! -d "$nvim_dir" ]]; then
-        warn "Neovim directory not found: $nvim_dir"
-        return
-    fi
-    
-    # Create nvim config directory if it doesn't exist
-    mkdir -p "$HOME/.config/nvim"
-    
-    find "$nvim_dir" -type f -printf "%P\n" | while read -r file; do
-        target_file="$HOME/.config/nvim/$file"
-        create_symlink "$nvim_dir/$file" "$target_file"
-    done
-    
-    success "Neovim configuration completed!"
-}
 
 show_post_install_info() {
     echo
@@ -683,9 +662,9 @@ show_post_install_info() {
 ## Main Execution Flow
 
 main() {
-    local options=("setup_bash" "setup_docker" "setup_docker_environment" "setup_nvim")
-    local descriptions=("Bash Configuration" "Docker Service" "Docker Environment" "Neovim")
-    local selected=("false" "false" "false" "false")
+    local options=("setup_bash" "setup_docker" "setup_docker_environment")
+    local descriptions=("Bash Configuration" "Docker Service" "Docker Environment")
+    local selected=("false" "false" "false")
 
     # System checks
     check_arch_linux
@@ -710,7 +689,7 @@ main() {
         read -rp "Choice: " choice
 
         case "$choice" in
-        [1-4])
+        [1-3])
             local index=$((choice - 1))
             if [[ "${selected[$index]}" == "true" ]]; then
                 selected[$index]="false"
