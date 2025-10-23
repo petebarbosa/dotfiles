@@ -40,6 +40,7 @@
 - **Document all critical issues** found during codebase analysis
 - **Structure fixes by priority** using the template's phase system
 - **Track status** using the provided status legend (🔴 Not Started, 🟡 In Progress, 🟢 Completed, ⚠️ Blocked)
+- **MANDATORY: Before proceeding to implementation, ask the user if they are satisfied with the plan and request permission to write the plan into a `plan.md` file**
 
 ## Prohibited Behaviors During Planning
 
@@ -65,6 +66,7 @@
 - ✅ All ambiguities clarified through questions
 - ✅ plan.md created/updated following the template structure
 - ✅ All critical issues documented with proper status tracking
+- ✅ User approval obtained before writing plan to plan.md file
 
 ## Remember
 
