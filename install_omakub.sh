@@ -50,6 +50,39 @@ setup_bash() {
     echo "⚠️  .bashrc.env.example not found in $SCRIPT_DIR"
   fi
   
+  # Add Docker aliases sourcing to .bashrc if not already present
+  local docker_aliases_line="# Source Docker service management aliases if they exist"
+  local docker_aliases_source="if [ -f \"\$HOME/.dotfiles/docker/.docker-aliases\" ]; then"
+  local docker_aliases_load="    source \"\$HOME/.dotfiles/docker/.docker-aliases\""
+  local docker_aliases_end="fi"
+  
+  # Determine which .bashrc file to modify
+  local bashrc_file="$HOME/.bashrc"
+  if [[ -L "$HOME/.bashrc" ]]; then
+    # If it's a symlink, modify the target file
+    bashrc_file=$(readlink "$HOME/.bashrc")
+    if [[ ! -f "$bashrc_file" ]]; then
+      # If symlink target doesn't exist, use the home .bashrc
+      bashrc_file="$HOME/.bashrc"
+    fi
+  fi
+  
+  if [[ -f "$bashrc_file" ]]; then
+    # Check if Docker aliases sourcing is already present
+    if ! grep -q "Source Docker service management aliases" "$bashrc_file"; then
+      echo "" >> "$bashrc_file"
+      echo "$docker_aliases_line" >> "$bashrc_file"
+      echo "$docker_aliases_source" >> "$bashrc_file"
+      echo "$docker_aliases_load" >> "$bashrc_file"
+      echo "$docker_aliases_end" >> "$bashrc_file"
+      echo "Added Docker aliases sourcing to $bashrc_file"
+    else
+      echo "Docker aliases sourcing already present in $bashrc_file"
+    fi
+  else
+    echo "⚠️  No .bashrc file found to modify"
+  fi
+  
   echo "✅ Bash configuration completed!"
 }
 
@@ -327,13 +360,32 @@ setup_docker_environment() {
   echo "✅ Docker environment configured!"
 }
 
+setup_docker_aliases() {
+  echo "Setting up Docker service management aliases..."
+  
+  local docker_dir="$SCRIPT_DIR/docker"
+  local alias_file="$docker_dir/.docker-aliases"
+  
+  if [[ ! -f "$alias_file" ]]; then
+    echo "ERROR: Docker aliases file not found: $alias_file"
+    return 1
+  fi
+  
+  # Make the alias file executable
+  chmod +x "$alias_file"
+  
+  echo "✅ Docker aliases configured!"
+  echo "   Aliases will be available in new shell sessions"
+  echo "   Use 'ds' to start services, 'dss' to stop, 'dsps' for status, etc."
+}
+
 
 ## Main Execution Flow
 
 main() {
-  local options=("setup_bash" "setup_docker" "setup_docker_environment")
-  local descriptions=("Bash Configuration" "Docker Service" "Docker Environment")
-  local selected=("false" "false" "false")
+  local options=("setup_bash" "setup_docker" "setup_docker_environment" "setup_docker_aliases")
+  local descriptions=("Bash Configuration" "Docker Service" "Docker Environment" "Docker Aliases")
+  local selected=("false" "false" "false" "false")
 
   while true; do
     clear
@@ -354,7 +406,7 @@ main() {
     read -rp "Choice: " choice
 
     case "$choice" in
-    [1-3])
+    [1-4])
       local index=$((choice - 1))
       if [[ "${selected[$index]}" == "true" ]]; then
         selected[$index]="false"
@@ -389,9 +441,26 @@ main() {
   echo "     • Configure tunnel routes to point to https://traefik:443"
   echo "  3. Start services:"
   echo "     cd $SCRIPT_DIR/docker && ./up.sh up -d"
+  echo "     # Or use the convenient alias: ds"
   echo "  4. Check service status:"
   echo "     ./up.sh logs -f"
+  echo "     # Or use the convenient alias: dsl"
   echo "  5. Access your services at the configured domains"
+  echo ""
+  echo "🐳 Docker Service Management Aliases (convenient shortcuts):"
+  echo "  • ds    - Start all services (cd ~/.dotfiles/docker && ./up.sh up -d)"
+  echo "  • dss   - Stop all services (cd ~/.dotfiles/docker && ./up.sh down)"
+  echo "  • dsr   - Restart all services (cd ~/.dotfiles/docker && ./up.sh restart)"
+  echo "  • dsps  - Check status (cd ~/.dotfiles/docker && ./up.sh ps)"
+  echo "  • dsl   - View logs (cd ~/.dotfiles/docker && ./up.sh logs -f)"
+  echo "  • dsu   - Update and restart (cd ~/.dotfiles/docker && ./up.sh pull && ./up.sh restart)"
+  echo "  • dse   - Enable auto-start (systemctl --user enable docker-compose-apps)"
+  echo "  • dsd   - Disable auto-start (systemctl --user disable docker-compose-apps)"
+  echo "  • dsss  - Check systemd service status (systemctl --user status docker-compose-apps)"
+  echo "  • dsb   - Create backup (cd ~/.dotfiles/docker && ./backup.sh)"
+  echo "  • dsbf  - Force backup (cd ~/.dotfiles/docker && ./backup.sh force)"
+  echo "  • dssf  - Force stop (cd ~/.dotfiles/docker && ./up.sh down --remove-orphans)"
+  echo "  • dsrf  - Force restart (cd ~/.dotfiles/docker && ./up.sh down && ./up.sh up -d)"
   echo ""
   echo "Service commands (user services, no sudo needed):"
   echo "  • systemctl --user status docker-compose-apps.service"
