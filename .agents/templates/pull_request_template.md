@@ -2,7 +2,7 @@
 
 ## 📋 Summary
 
-[Provide a concise overview of what this PR accomplishes and why it's important]
+[Provide a concise overview of what this PR accomplishes and why it's important and don't add any emoji]
 
 ## What's Added/Changed
 
