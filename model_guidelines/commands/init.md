@@ -73,6 +73,20 @@ You will plan everything thoroughly before implementing. All implementations sho
 - **Clarify requirements** - If something is ambiguous, ask before implementing.
 - **Follow existing patterns** - Respect the established code conventions and architectural decisions in this codebase.
 
+## Documentation & Rules
+
+The following files contain important rules and templates that must be followed:
+
+### Rules
+- **General Guidelines:** `@model_guidelines/rules/general.md`
+- **Planning Phase:** `@model_guidelines/rules/planning_phase.md`
+- **Implementation Phase:** `@model_guidelines/rules/implementation_phase.md`
+
+### Templates
+- **Implementation Plan:** `@model_guidelines/templates/plan_template.md`
+- **Change Log:** `@model_guidelines/templates/change_log_template.md`
+- **Pull Request:** `@model_guidelines/templates/pull_request_template.md`
+
 ## Project Overview
 
 [Describe the project purpose, architecture, and main components]
@@ -190,8 +204,6 @@ project-root/
   2. Merge/update it with new findings
   3. Create a backup before overwriting
   
-- If `.cursorrules` exists, mention that `AGENTS.md` is the newer recommended format and ask if they want to migrate the content
-
 ### Step 4: Final Output
 
 1. Present a summary of what was discovered about the project
@@ -205,6 +217,7 @@ project-root/
 - **Persona must be tailored** - The "10 years of experience" should mention the SPECIFIC technologies found in the project (React, Python, Go, etc.)
 - Be thorough but concise - the file should be useful, not overwhelming
 - Focus on information that helps AI assistants understand and work with the codebase
+- It MUST contain the assertion that it should NEVER assume anything, that it's ok to not know the whole context and to ask as many questions as necessary to have the whole context
 - Include specific examples from the codebase where helpful
 - If you find any `.env.example` files, note the required environment variables (but NEVER include actual secrets)
 - Respect any existing code style decisions, don't suggest changes unless asked

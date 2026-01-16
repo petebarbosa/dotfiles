@@ -1,5 +1,5 @@
 # Agent Guidelines for .dotfiles Repository
-Source `./.agents/general.md`
+Source `./model_guidelines/rules/general.md`
 
 ## Build/Test Commands
 - No traditional build/test (infrastructure repo: bash scripts + Docker configs)
