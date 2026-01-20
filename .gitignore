@@ -3,3 +3,15 @@
 !**/.env.example
 **/vw-data/
 **/letsencrypt/
+
+# OpenCode - Sensitive authentication files (antigravity)
+**/antigravity-accounts.json
+**/antigravity-signature-cache.json
+**/antigravity-logs/
+
+# OpenCode - Additional sensitive data patterns (defense-in-depth)
+**/opencode/auth.json
+**/opencode/storage/
+**/opencode/log/
+**/opencode/snapshot/
+**/opencode/tool-output/
