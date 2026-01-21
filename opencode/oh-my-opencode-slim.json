@@ -1,0 +1,32 @@
+{
+  "agents": {
+    "orchestrator": {
+      "model": "google/claude-opus-4-5-thinking",
+      "skills": [
+        "*"
+      ]
+    },
+    "oracle": {
+      "model": "google/claude-opus-4-5-thinking",
+      "skills": []
+    },
+    "librarian": {
+      "model": "google/gemini-3-flash",
+      "skills": []
+    },
+    "explorer": {
+      "model": "google/gemini-3-flash",
+      "skills": []
+    },
+    "designer": {
+      "model": "google/gemini-3-flash",
+      "skills": [
+        "playwright"
+      ]
+    },
+    "fixer": {
+      "model": "google/gemini-3-flash",
+      "skills": []
+    }
+  }
+}
