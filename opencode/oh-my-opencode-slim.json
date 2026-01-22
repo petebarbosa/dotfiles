@@ -1,13 +1,13 @@
 {
   "agents": {
     "orchestrator": {
-      "model": "google/claude-opus-4-5-thinking",
+      "model": "google/claude-sonnet-4-5-thinking",
       "skills": [
         "*"
       ]
     },
     "oracle": {
-      "model": "google/claude-opus-4-5-thinking",
+      "model": "github-copilot/gpt-5.2",
       "skills": []
     },
     "librarian": {
@@ -19,13 +19,13 @@
       "skills": []
     },
     "designer": {
-      "model": "google/gemini-3-flash",
+      "model": "google/gemini-3-pro",
       "skills": [
         "playwright"
       ]
     },
     "fixer": {
-      "model": "google/gemini-3-flash",
+      "model": "google/gemini-3-pro",
       "skills": []
     }
   }

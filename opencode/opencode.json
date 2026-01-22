@@ -4,7 +4,8 @@
     "opencode-antigravity-auth@latest",
     "@bastiangx/opencode-unmoji",
     "opencode-mystatus",
-    "oh-my-opencode-slim"
+    "oh-my-opencode-slim",
+    "@howaboua/opencode-roadmap-plugin@latest"
   ],
   "theme": "system",
   "command": {
