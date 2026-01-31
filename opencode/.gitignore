@@ -7,3 +7,4 @@ antigravity-signature-cache.json
 antigravity-logs/
 copilot-quota-token.json
 .gitignore
+antigravity-accounts.json.*.tmp
