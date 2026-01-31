@@ -1,8 +1,10 @@
 node_modules
 package.json
+package-lock.json
 bun.lock
 antigravity-accounts.json
 antigravity-signature-cache.json
 antigravity-logs/
 copilot-quota-token.json
 .gitignore
+antigravity-accounts.json.*.tmp

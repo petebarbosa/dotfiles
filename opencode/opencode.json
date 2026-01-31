@@ -4,7 +4,6 @@
     "opencode-antigravity-auth@latest",
     "@bastiangx/opencode-unmoji",
     "opencode-mystatus",
-    "oh-my-opencode-slim",
     "@howaboua/opencode-roadmap-plugin@latest"
   ],
   "theme": "system",
@@ -17,10 +16,10 @@
   "provider": {
     "google": {
       "name": "Google",
+      "npm": "@ai-sdk/google",
       "models": {
-        "gemini-3-pro-high": {
-          "name": "Gemini 3 Pro High",
-          "thinking": true,
+        "antigravity-gemini-3-pro": {
+          "name": "Gemini 3 Pro (Antigravity)",
           "attachment": true,
           "limit": {
             "context": 1048576,
@@ -35,10 +34,18 @@
             "output": [
               "text"
             ]
+          },
+          "variants": {
+            "low": {
+              "thinkingLevel": "low"
+            },
+            "high": {
+              "thinkingLevel": "high"
+            }
           }
         },
-        "gemini-3-flash": {
-          "name": "Gemini 3 Flash",
+        "antigravity-gemini-3-flash": {
+          "name": "Gemini 3 Flash (Antigravity)",
           "attachment": true,
           "limit": {
             "context": 1048576,
@@ -53,14 +60,28 @@
             "output": [
               "text"
             ]
+          },
+          "variants": {
+            "minimal": {
+              "thinkingLevel": "minimal"
+            },
+            "low": {
+              "thinkingLevel": "low"
+            },
+            "medium": {
+              "thinkingLevel": "medium"
+            },
+            "high": {
+              "thinkingLevel": "high"
+            }
           }
         },
-        "claude-opus-4-5-thinking": {
-          "name": "Claude Opus 4.5 Thinking",
+        "antigravity-claude-sonnet-4-5": {
+          "name": "Claude Sonnet 4.5 (Antigravity)",
           "attachment": true,
           "limit": {
             "context": 200000,
-            "output": 32000
+            "output": 64000
           },
           "modalities": {
             "input": [
@@ -73,12 +94,12 @@
             ]
           }
         },
-        "claude-sonnet-4-5-thinking": {
-          "name": "Claude Sonnet 4.5 Thinking",
+        "antigravity-claude-sonnet-4-5-thinking": {
+          "name": "Claude Sonnet 4.5 Thinking (Antigravity)",
           "attachment": true,
           "limit": {
             "context": 200000,
-            "output": 32000
+            "output": 64000
           },
           "modalities": {
             "input": [
@@ -89,6 +110,48 @@
             "output": [
               "text"
             ]
+          },
+          "variants": {
+            "low": {
+              "thinkingConfig": {
+                "thinkingBudget": 8192
+              }
+            },
+            "max": {
+              "thinkingConfig": {
+                "thinkingBudget": 32768
+              }
+            }
+          }
+        },
+        "antigravity-claude-opus-4-5-thinking": {
+          "name": "Claude Opus 4.5 Thinking (Antigravity)",
+          "attachment": true,
+          "limit": {
+            "context": 200000,
+            "output": 64000
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "pdf"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "low": {
+              "thinkingConfig": {
+                "thinkingBudget": 8192
+              }
+            },
+            "max": {
+              "thinkingConfig": {
+                "thinkingBudget": 32768
+              }
+            }
           }
         }
       }
@@ -96,13 +159,5 @@
   },
   "permission": {
     "read": "allow"
-  },
-  "agent": {
-    "explore": {
-      "disable": true
-    },
-    "general": {
-      "disable": true
-    }
   }
 }
