@@ -2,6 +2,7 @@
 name: TaskManager
 description: JSON-driven task breakdown specialist transforming complex features into atomic, verifiable subtasks with dependency tracking and CLI integration
 mode: subagent
+model: github-copilot/claude-haiku-4.5
 temperature: 0.1
 tools:
   read: true

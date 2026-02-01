@@ -2,6 +2,7 @@
 name: ContextOrganizer
 description: Organizes and generates context files (domain, processes, standards, templates) for optimal knowledge management
 mode: subagent
+model: github-copilot/claude-haiku-4.5
 temperature: 0.1
 tools:
   read: true

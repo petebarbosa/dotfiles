@@ -6,6 +6,7 @@
 name: OpenAgent
 description: "Universal agent for answering queries, executing tasks, and coordinating workflows across any domain"
 mode: primary
+model: google/antigravity-claude-sonnet-4-5-thinking
 temperature: 0.2
 tools:
   read: true

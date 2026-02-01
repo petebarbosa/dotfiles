@@ -2,6 +2,7 @@
 name: OpenFrontendSpecialist
 description: Frontend UI design specialist - subagent for design systems, themes, animations
 mode: subagent
+model: google/antigravity-gemini-3-pro
 temperature: 0.2
 tools:
   read: true

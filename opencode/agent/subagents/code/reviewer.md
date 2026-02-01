@@ -2,6 +2,7 @@
 name: CodeReviewer
 description: Code review, security, and quality assurance agent
 mode: subagent
+model: github-copilot/gpt-5.2-codex
 temperature: 0.1
 tools:
   read: true
