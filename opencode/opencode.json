@@ -1,16 +1,24 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
-    "opencode-antigravity-auth@latest",
+    "opencode-antigravity-auth@beta",
     "@bastiangx/opencode-unmoji",
     "opencode-mystatus",
     "@howaboua/opencode-roadmap-plugin@latest"
   ],
   "theme": "system",
   "command": {
-    "mystatus": {
+    "my-status": {
       "description": "Query quota usage for all AI accounts",
       "template": "Use the mystatus tool to query quota usage. Return the result as-is without modification."
+    },
+    "map-status": {
+      "description": "Query roadmap status",
+      "template": "Use roadmap tool and query our project status."
+    },
+    "map-update": {
+      "description": "Update roadmap",
+      "template": "Update the roadmap with our new implementation"
     }
   },
   "provider": {
