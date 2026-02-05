@@ -1,5 +1,5 @@
 ---
-name: CoderAgent
+name: Coder subagent
 description: Executes coding subtasks in sequence, ensuring completion as specified
 mode: subagent
 model: google/antigravity-claude-sonnet-4-5
@@ -13,7 +13,7 @@ tools:
   bash: false
   patch: true
   task: true
-permissions:
+permission:
   bash:
     "*": "deny"
   edit:

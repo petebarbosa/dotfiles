@@ -354,7 +354,7 @@ if subagent_type not in available_types:
 
 **Solutions**:
 1. Check subagent has required tools enabled
-2. Verify subagent permissions allow operation
+2. Verify subagent permission allow operation
 3. Check subagent prompt is clear and actionable
 
 ---

@@ -146,7 +146,7 @@ openagents-repo/
 ├── guides/                     # How to add agent, test, etc.
 ├── lookup/                     # Commands, file locations
 ├── examples/                   # Context bundles, prompts
-└── errors/                     # Tool permissions, validation
+└── errors/                     # Tool permission, validation
 ```
 
 **Why this works**:

@@ -1,5 +1,5 @@
 ---
-name: OpenFrontendSpecialist
+name: Frontend specialist
 description: Frontend UI design specialist - subagent for design systems, themes, animations
 mode: subagent
 model: google/antigravity-gemini-3-pro
@@ -12,7 +12,7 @@ tools:
   task: true
   glob: true
   grep: true
-permissions:
+permission:
   task:
     contextscout: "allow"
     externalscout: "allow"

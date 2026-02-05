@@ -1,5 +1,5 @@
 ---
-name: ExternalScout
+name: External scout
 description: Fetches live, version-specific documentation for external libraries and frameworks using Context7 and other sources. Filters, sorts, and returns relevant documentation.
 mode: subagent
 model: google/antigravity-gemini-3-flash

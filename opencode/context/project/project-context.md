@@ -36,7 +36,7 @@ tasks/               # Task management files
 description: "What this agent does"
 mode: primary|subagent
 tools: [read, edit, bash, etc.]
-permissions: [security restrictions]
+permission: [security restrictions]
 ---
 
 # Agent Name
@@ -80,7 +80,7 @@ Execute [task] now.
 
 ## Security Guidelines
 
-- Agents have restricted permissions by default
+- Agents have restricted permission by default
 - Sensitive operations require explicit approval
 - No direct file system modifications without validation
 - Build commands limited to safe operations

@@ -3,7 +3,7 @@
 # Metadata (id, name, category, type, version, author, tags, dependencies) is stored in:
 # .opencode/config/agent-metadata.json
 
-name: OpenAgent
+name: Orchestrator
 description: "Universal agent for answering queries, executing tasks, and coordinating workflows across any domain"
 mode: primary
 model: google/antigravity-claude-sonnet-4-5-thinking
@@ -17,7 +17,7 @@ tools:
   bash: true
   task: true
   patch: true
-permissions:
+permission:
   bash:
     "rm -rf *": "ask"
     "rm -rf /*": "deny"

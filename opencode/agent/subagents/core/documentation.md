@@ -1,5 +1,5 @@
 ---
-name: DocWriter
+name: Doc writter
 description: Documentation authoring agent
 mode: subagent
 model: opencode/minimax-m2.1-free
@@ -12,7 +12,7 @@ tools:
   write: true
   bash: false
   task: true
-permissions:
+permission:
   bash:
     "*": "deny"
   edit:

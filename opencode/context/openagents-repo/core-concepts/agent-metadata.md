@@ -311,7 +311,7 @@ vim .opencode/config/agent-metadata.json
 
 ### Updating Agent Metadata
 
-**To update OpenCode configuration** (tools, permissions, temperature):
+**To update OpenCode configuration** (tools, permission, temperature):
 ```bash
 # Edit agent file frontmatter
 vim .opencode/agent/category/my-agent.md

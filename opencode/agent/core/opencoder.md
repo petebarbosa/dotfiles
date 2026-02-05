@@ -3,7 +3,7 @@
 # Metadata (id, name, category, type, version, author, tags, dependencies) is stored in:
 # .opencode/config/agent-metadata.json
 
-name: OpenCoder
+name: Coder
 description: "Orchestration agent for complex coding, architecture, and multi-file refactoring"
 mode: primary
 model: github-copilot/claude-opus-4.5
@@ -17,7 +17,7 @@ tools:
   glob: true
   bash: true
   patch: true
-permissions:
+permission:
   bash:
     "rm -rf *": "ask"
     "sudo *": "deny"

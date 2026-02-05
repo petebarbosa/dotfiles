@@ -267,7 +267,7 @@ prompts:
 |---------|-------|-----|
 | OpenAgent runs instead | Used `--agent` flag | Use `--subagent` flag |
 | Tool calls: 0 | Prompt doesn't emphasize tools | Add critical rules section |
-| Permission denied | Tool restricted in frontmatter | Check `tools:` and `permissions:` |
+| Permission denied | Tool restricted in frontmatter | Check `tools:` and `permission:` |
 | Test timeout | Agent stuck/looping | Check prompt logic, add timeout |
 
 ---

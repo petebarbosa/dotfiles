@@ -1,5 +1,5 @@
 ---
-name: CodeReviewer
+name: Code reviewer
 description: Code review, security, and quality assurance agent
 mode: subagent
 model: github-copilot/gpt-5.2-codex
@@ -12,7 +12,7 @@ tools:
   edit: false
   write: false
   task: true
-permissions:
+permission:
   bash:
     "*": "deny"
   edit:

@@ -52,7 +52,7 @@ Create a new data analyst agent for the OpenAgents Control repository. This agen
 - Must include proper frontmatter metadata (id, name, description, category, type, version, etc.)
 - Must follow naming convention: `data-analyst.md` (kebab-case)
 - Must include tags for discoverability
-- Must specify tools and permissions
+- Must specify tools and permission
 - Must be registered in `registry.json`
 
 **Naming Conventions**:
@@ -73,7 +73,7 @@ Create a new data analyst agent for the OpenAgents Control repository. This agen
 - Must use category-based organization (data category)
 - Must include proper frontmatter metadata
 - Must specify tools needed (read, write, bash, etc.)
-- Must define permissions for sensitive operations
+- Must define permission for sensitive operations
 - Must include temperature setting (0.1-0.3 for analytical tasks)
 - Must follow agent prompt structure (context, role, task, instructions)
 - Eval tests must use YAML format
@@ -115,7 +115,7 @@ Create a new data analyst agent for the OpenAgents Control repository. This agen
 
 **Manual Checks**:
 - Verify frontmatter includes all required fields
-- Check that tools and permissions are appropriate
+- Check that tools and permission are appropriate
 - Ensure prompt is clear and follows standards
 - Verify eval tests are meaningful
 

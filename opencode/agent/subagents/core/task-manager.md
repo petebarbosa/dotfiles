@@ -1,5 +1,5 @@
 ---
-name: TaskManager
+name: Task manager
 description: JSON-driven task breakdown specialist transforming complex features into atomic, verifiable subtasks with dependency tracking and CLI integration
 mode: subagent
 model: github-copilot/claude-haiku-4.5
@@ -13,7 +13,7 @@ tools:
   bash: true
   task: true
   patch: true
-permissions:
+permission:
   bash:
     "npx ts-node*task-cli*": "allow"
     "mkdir -p .tmp/tasks*": "allow"

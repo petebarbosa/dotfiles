@@ -60,7 +60,7 @@ These are language-agnostic patterns that apply to all programming languages. La
 **ALWAYS** validate file paths:
 
 - Prevent path traversal attacks
-- Check file permissions before operations
+- Check file permission before operations
 - Use absolute paths when possible
 - Handle file not found errors gracefully
 - Close file handles properly

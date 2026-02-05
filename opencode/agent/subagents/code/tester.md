@@ -1,5 +1,5 @@
 ---
-name: TestEngineer
+name: Test engineer
 description: Test authoring and TDD agent
 mode: subagent
 model: github-copilot/claude-haiku-4.5
@@ -12,7 +12,7 @@ tools:
   write: true
   bash: true
   task: true
-permissions:
+permission:
   bash:
     "npx vitest *": "allow"
     "npx jest *": "allow"

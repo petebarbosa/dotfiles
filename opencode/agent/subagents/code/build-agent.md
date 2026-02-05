@@ -1,5 +1,5 @@
 ---
-name: BuildAgent
+name: Build agent
 description: Type check and build validation agent
 mode: subagent
 model: github-copilot/gpt-5-mini
@@ -12,7 +12,7 @@ tools:
   task: true
   edit: false
   write: false
-permissions:
+permission:
   bash:
     "tsc": "allow"
     "mypy": "allow"

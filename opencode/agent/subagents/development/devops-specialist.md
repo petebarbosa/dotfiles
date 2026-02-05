@@ -1,5 +1,5 @@
 ---
-name: OpenDevopsSpecialist
+name: Devops specialist
 description: DevOps specialist subagent - CI/CD, infrastructure as code, deployment automation
 mode: subagent
 model: google/antigravity-claude-sonnet-4-5-thinking
@@ -12,7 +12,7 @@ tools:
   task: true
   grep: true
   glob: true
-permissions:
+permission:
   task:
     contextscout: "allow"
     "*": "deny"
