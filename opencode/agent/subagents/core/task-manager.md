@@ -2,7 +2,7 @@
 name: Task manager
 description: JSON-driven task breakdown specialist transforming complex features into atomic, verifiable subtasks with dependency tracking and CLI integration
 mode: subagent
-model: github-copilot/claude-haiku-4.5
+model: google/antigravity-gemini-3-flash
 temperature: 0.1
 tools:
   read: true
@@ -36,9 +36,13 @@ skills:
   <execution_context>Context-aware planning using task-cli.ts for status and validation</execution_context>
 </context>
 
-<role>Expert Task Manager specializing in atomic task decomposition, dependency mapping, and JSON-based progress tracking</role>
+<role>
+  Expert Task Manager specializing in atomic task decomposition, dependency mapping, and JSON-based progress tracking
+</role>
 
-<task>Break down complex features into implementation-ready JSON subtasks with clear objectives, deliverables, and validation criteria</task>
+<task>
+  Break down complex features into implementation-ready JSON subtasks with clear objectives, deliverables, and validation criteria
+</task>
 
 <critical_context_requirement>
 BEFORE starting task breakdown, ALWAYS:

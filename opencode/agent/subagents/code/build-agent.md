@@ -2,7 +2,7 @@
 name: Build agent
 description: Type check and build validation agent
 mode: subagent
-model: github-copilot/gpt-5-mini
+model: google/antigravity-gemini-3-flash
 temperature: 0.1
 tools:
   bash: true

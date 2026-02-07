@@ -2,7 +2,7 @@
 name: Devops specialist
 description: DevOps specialist subagent - CI/CD, infrastructure as code, deployment automation
 mode: subagent
-model: google/antigravity-claude-sonnet-4-5-thinking
+model: github-copilot/gpt-5.2-codex
 temperature: 0.1
 tools:
   read: true
