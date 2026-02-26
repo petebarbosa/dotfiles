@@ -1,6 +1,6 @@
 ---
 description: Financial advisor
-name: FinancialCounselour
+name: Financial counselour
 mode: all
 model: google/gemini-3-flash-preview
 
