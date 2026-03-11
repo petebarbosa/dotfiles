@@ -2,12 +2,18 @@
 Description=Docker Compose Applications
 After=docker.service network-online.target
 Requires=docker.service
+Wants=network-online.target
 
 [Service]
-User=pedro-barbosa
-Group=pedro-barbosa
+# Replace YOUR_USER_NAME with your actual Linux username.
+# This file is intentionally kept as a template — do not commit personal values.
+User=YOUR_USER_NAME
+Group=YOUR_USER_NAME
+WorkingDirectory=/home/YOUR_USER_NAME/.dotfiles/docker
 ExecStart=/bin/bash /home/YOUR_USER_NAME/.dotfiles/docker/up.sh up -d
-Restart=no
+ExecStop=/bin/bash /home/YOUR_USER_NAME/.dotfiles/docker/up.sh down
+Restart=on-failure
+RestartSec=10s
 
 [Install]
 WantedBy=multi-user.target
