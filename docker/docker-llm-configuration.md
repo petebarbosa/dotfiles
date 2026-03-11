@@ -28,8 +28,9 @@ Traefik (:80/:443)                        Host SSH server (:22)         │
 LAN users ──────────────────────────────────────────────────────────────┘
     └─→ Access Traefik directly (no tunnel required on the local network)
 
-PostgreSQL (shared, Docker-network-only, no host port exposure)
-    └─→ Available to any service at hostname "postgres" on port 5432
+PostgreSQL (shared, available on Docker network + localhost:5432 for dev)
+    ├─→ Docker apps: hostname "postgres" on port 5432
+    └─→ Host apps (Rails dev): localhost:5432 (127.0.0.1 only)
 ```
 
 **Key principle**: Cloudflared establishes an outbound-only tunnel — no inbound ports
@@ -132,9 +133,7 @@ by copying the `.env.example` and ask the user for the real values.
 |---|---|---|
 | `UK_HOSTNAME` | Hostname for Traefik routing | `status.yourdomain.com` |
 
----
-
-## Step-by-Step Setup for a New User
+--- ## Step-by-Step Setup for a New User
 
 Follow these steps in order. Steps marked **[Cloudflare Dashboard]** require browser
 access to https://one.dash.cloudflare.com.
@@ -410,6 +409,128 @@ No manual registration is needed.
 
 ---
 
+## PostgreSQL Development Access
+
+### Architecture
+
+PostgreSQL is configured for dual access:
+- **Docker containers**: Connect via hostname `postgres:5432` on `traefik_network`
+- **Host development**: Connect via `localhost:5432` (bound to 127.0.0.1 only)
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                      Your Host Machine                  │
+│                                                         │
+│  ┌─────────────────┐      ┌─────────────────────────┐   │
+│  │   Rails (host)  │      │    Docker Network       │   │
+│  │   development   │      │   (traefik_network)     │   │
+│  │                 │      │                         │   │
+│  │  Rails server   │◄────►│  ┌─────────────────┐    │   │
+│  │  (localhost)    │      │  │   PostgreSQL    │    │   │
+│  │                 │      │  │   (postgres)    │    │   │
+│  │  Connection:    │      │  │                 │    │   │
+│  │  localhost:5432 │◄────►│  │  Port 5432      │    │   │
+│  │                 │      │  │  (127.0.0.1)    │    │   │
+│  └─────────────────┘      │  └─────────────────┘    │   │
+│                           └─────────────────────────┘   │
+│                                    │                    │
+│                           ┌────────┴────────┐           │
+│                           ▼                 ▼           │
+│                    ┌────────────┐    ┌────────────┐     │
+│                    │  Docker    │    │  Docker    │     │
+│                    │   App 1    │    │   App 2    │     │
+│                    │  (hostname:│    │  (hostname:│     │
+│                    │  postgres) │    │  postgres) │     │
+│                    └────────────┘    └────────────┘     │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Database Isolation Strategy
+
+Each application gets **dedicated databases and users** within the single PostgreSQL instance:
+
+```sql
+-- Create user for myapp1 (superuser creates this)
+CREATE USER myapp1 WITH PASSWORD 'secure_random_password';
+
+-- Create databases for myapp1
+CREATE DATABASE myapp1_development OWNER myapp1;
+CREATE DATABASE myapp1_test OWNER myapp1;
+
+-- Create user for myapp2
+CREATE USER myapp2 WITH PASSWORD 'another_secure_password';
+
+-- Create databases for myapp2
+CREATE DATABASE myapp2_development OWNER myapp2;
+CREATE DATABASE myapp2_test OWNER myapp2;
+```
+
+**Benefits:**
+- Users cannot access other users' databases
+- Applications are isolated at the database level
+- Single PostgreSQL instance (less resource overhead)
+
+### Development Setup
+
+**Create databases and user**
+
+```bash
+# Replace 'myapp' with your application name
+# Replace 'secure_password' with a generated password
+
+docker exec -it postgres psql -U postgres -c "CREATE USER myapp WITH PASSWORD 'secure_password';"
+docker exec -it postgres psql -U postgres -c "CREATE DATABASE myapp_development OWNER myapp;"
+docker exec -it postgres psql -U postgres -c "CREATE DATABASE myapp_test OWNER myapp;"
+
+# Grant privileges (optional, owner has full access by default)
+docker exec -it postgres psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE myapp_development TO myapp;"
+docker exec -it postgres psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE myapp_test TO myapp;"
+```
+
+### PostgreSQL Commands Reference
+
+```bash
+# Connect to PostgreSQL as superuser
+docker exec -it postgres psql -U postgres
+
+# List all databases
+\l
+
+# List all users
+\du
+
+# Create database
+create database myapp_development;
+
+# Create user with password
+create user myapp with password 'password';
+
+# Grant ownership
+alter database myapp_development owner to myapp;
+
+# Drop database (careful!)
+drop database myapp_development;
+
+# Connect to specific database
+\c myapp_development
+
+# List tables in current database
+\dt
+
+# Exit psql
+\q
+```
+
+### Security Notes
+
+- Port 5432 is bound to `127.0.0.1` only (localhost), not exposed to LAN or internet
+- Each application should use its own database user
+- Never share database users between applications
+- Store passwords in environment variables, not in code
+- `.env` files are gitignored by default
+
+---
+
 ## Networking Reference
 
 | Network | Purpose |
@@ -425,7 +546,7 @@ No manual registration is needed.
 | Vaultwarden | 80 | — | Via Traefik only |
 | Home Assistant | 8123 | — | Via Traefik only |
 | Uptime Kuma | 3001 | — | Via Traefik only |
-| PostgreSQL | 5432 | — | Docker network only |
+| PostgreSQL | 5432 | 5432 (127.0.0.1 only) | Docker network + localhost |
 | Cloudflared | — | — | Outbound tunnel only |
 
 ## Troubleshooting

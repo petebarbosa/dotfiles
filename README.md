@@ -7,7 +7,7 @@ Compatible with Ubuntu/Omakub and Arch/Hyprland setups.
 
 ### Infrastructure (docker/)
 - **Traefik** - Reverse proxy with automatic TLS
-- **PostgreSQL** - Shared database (Docker network only)
+- **PostgreSQL** - Shared database (Docker network + localhost:5432 for dev)
 - **Cloudflared** - Secure Cloudflare tunnel (no open ports)
 
 ### Applications (docker/)
