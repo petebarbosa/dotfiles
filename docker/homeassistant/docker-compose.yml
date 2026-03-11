@@ -1,0 +1,26 @@
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    restart: unless-stopped
+    environment:
+      - TZ=${HA_TZ}
+    volumes:
+      # HA configuration directory — bind mount for easy access and backup.
+      # gitignored: contains secrets, tokens, and user data.
+      - ./config:/config
+    # privileged: required for some hardware integrations (USB Zigbee sticks, etc.)
+    # Remove if not needed — it grants full host device access.
+    privileged: true
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.homeassistant.rule=Host(`${HA_HOSTNAME}`)
+      - traefik.http.routers.homeassistant.entrypoints=websecure
+      - traefik.http.routers.homeassistant.tls=true
+      - traefik.http.services.homeassistant-svc.loadbalancer.server.port=8123
+    networks:
+      - traefik_network
+
+networks:
+  traefik_network:
+    external: true
