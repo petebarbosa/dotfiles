@@ -29,18 +29,18 @@ Open this repository with an AI coding assistant (e.g., OpenCode, Claude) and as
 
 > Set up my dotfiles
 
-The assistant will use `AGENTS.md` to guide you through selecting which components to install.
+The assistant will use `dotfiles-llm-configuration.md` and `docker-llm-configuration.md` to guide you through selecting which components to install.
 
 ### Manual Installation
 
 See the documentation for each component:
-- [Docker Stack Setup](docker/AGENTS.md)
+- [Docker Stack Setup](docker/docker-llm-configuration.md)
 - [OpenCode Tools](opencode/tools/README.md)
 - [Keyboard Compositions](keyboard-compositions.md)
 
 ## Documentation
 
-- `docker/AGENTS.md` - Complete NAS stack architecture and setup guide
+- `docker/docker-llm-configuration.md` - Complete NAS stack architecture and setup guide
 - `docker/docs/specs/` - Technical specifications
 - `opencode/tools/README.md` - Custom OpenCode tools documentation
 - `keyboard-compositions.md` - Keyboard remapping guide

@@ -1,8 +1,20 @@
 **/.env
-**/.env.*
+**/.env.
 !**/.env.example
 **/vw-data/
 **/letsencrypt/
+
+# Service data and config directories (contain runtime state/secrets)
+**/data/
+docker/homeassistant/config/
+docker/postgres/data/
+
+# Cloudflared — tunnel credentials and resolved config (contain tunnel ID and secrets)
+docker/cloudflared/*.json
+docker/cloudflared/config.yml
+
+# TLS private keys
+**/*-key.pem
 
 # OpenCode - Sensitive authentication files (antigravity)
 **/antigravity-accounts.json
