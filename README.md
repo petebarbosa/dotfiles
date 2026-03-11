@@ -1,24 +1,50 @@
-<div id="#top" align="center">
-
 # dotfiles
 
-The good old dotfiles repository that every dev loves.
-This repository considers that you have a brand new [ubuntu][ubuntu] and [omakub][omakub]
+Personal dotfiles for development environment and self-hosted services.
+Compatible with Ubuntu/Omakub and Arch/Hyprland setups.
 
-</div>
+## Contents
 
-## Utilization
+### Infrastructure (docker/)
+- **Traefik** - Reverse proxy with automatic TLS
+- **PostgreSQL** - Shared database (Docker network only)
+- **Cloudflared** - Secure Cloudflare tunnel (no open ports)
 
-Simply run go to the dotfile folder and run:
+### Applications (docker/)
+- **Vaultwarden** - Bitwarden-compatible password manager
+- **Home Assistant** - Home automation platform
+- **Uptime Kuma** - Service uptime monitoring
 
-```bash
-chmod +x setup.sh
-./setup.sh
-```
+### Development (opencode/)
+- **OpenCode Configuration** - AI agent configs, custom commands, skills, and tools
 
-After it's finished, go into `~/.bashrc.env` and edit it's content to your own credentials.
+### System
+- **Keyboard Compositions** - Caps Lock remapping guide for Hyprland/keyd
 
-<!-- Links -->
+## Installation
 
-[ubuntu]: "https://ubuntu.com/"
-[omakub]: "https://omakub.org/"
+### With an AI Assistant (Recommended)
+
+Open this repository with an AI coding assistant (e.g., OpenCode, Claude) and ask:
+
+> Set up my dotfiles
+
+The assistant will use `AGENTS.md` to guide you through selecting which components to install.
+
+### Manual Installation
+
+See the documentation for each component:
+- [Docker Stack Setup](docker/AGENTS.md)
+- [OpenCode Tools](opencode/tools/README.md)
+- [Keyboard Compositions](keyboard-compositions.md)
+
+## Documentation
+
+- `docker/AGENTS.md` - Complete NAS stack architecture and setup guide
+- `docker/docs/specs/` - Technical specifications
+- `opencode/tools/README.md` - Custom OpenCode tools documentation
+- `keyboard-compositions.md` - Keyboard remapping guide
+
+## License
+
+MIT License - Copyright 2024 Pedro Barbosa
