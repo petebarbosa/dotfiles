@@ -1,0 +1,13 @@
+# Root compose file — uses `include` so each service resolves relative paths
+#
+# Do NOT pass multiple -f flags; use this single file instead.
+# Add new services by appending their compose file to the list below.
+
+include:
+  - path: cloudflared/docker-compose.yml
+  - path: homeassistant/docker-compose.yml
+  - path: postgres/docker-compose.yml
+  - path: redis/docker-compose.yml
+  - path: traefik/docker-compose.yml
+  - path: uptimekuma/docker-compose.yml
+  - path: vaultwarden/docker-compose.yml
