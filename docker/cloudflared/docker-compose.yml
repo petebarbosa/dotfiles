@@ -1,0 +1,17 @@
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel --config /etc/cloudflared/config.yml run
+    volumes:
+      # config.yml and credentials JSON are gitignored — never commit them.
+      # See config.yml.example for the expected structure.
+      - ./config.yml:/etc/cloudflared/config.yml:ro
+      - ./${CF_TUNNEL_ID}.json:/etc/cloudflared/${CF_TUNNEL_ID}.json:ro
+    networks:
+      - traefik_network
+
+networks:
+  traefik_network:
+    external: true

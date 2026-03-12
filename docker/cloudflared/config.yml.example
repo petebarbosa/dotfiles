@@ -1,0 +1,26 @@
+# Cloudflare Tunnel configuration
+# Replace placeholders: <TUNNEL_UUID>, <YOUR_DOMAIN>, <YOUR_*_SLUG>
+
+tunnel: <TUNNEL_UUID>
+credentials-file: /etc/cloudflared/<TUNNEL_UUID>.json
+
+ingress:
+  - hostname: <YOUR_VW_SLUG>.<YOUR_DOMAIN>
+    service: https://traefik:443
+    originRequest:
+      noTLSVerify: true
+
+  - hostname: <YOUR_HA_SLUG>.<YOUR_DOMAIN>
+    service: https://traefik:443
+    originRequest:
+      noTLSVerify: true
+
+  - hostname: <YOUR_UK_SLUG>.<YOUR_DOMAIN>
+    service: https://traefik:443
+    originRequest:
+      noTLSVerify: true
+
+  - hostname: <YOUR_SSH_SLUG>.<YOUR_DOMAIN>
+    service: ssh://localhost:22
+
+  - service: http_status:404
