@@ -57,13 +57,10 @@ if [[ ${MISSING_ENV} -eq 1 ]] || [[ ${#MISSING_CONFIGS[@]} -gt 0 ]]; then
 fi
 
 # ── Compose command ───────────────────────────────────────────────────────────
+# Uses the root docker-compose.yml with `include:` directives so each service
+# resolves relative paths (volumes, env_file, etc.) against its own directory.
 
-COMPOSE_FILES=""
-for f in $(find "${SCRIPT_DIR}" -mindepth 2 -name 'docker-compose.yml' | sort); do
-  COMPOSE_FILES+=" -f ${f}"
-done
-
-COMMAND="docker compose --project-name ${PROJECT_NAME}${COMPOSE_FILES} $*"
+COMMAND="docker compose --project-name ${PROJECT_NAME} -f ${SCRIPT_DIR}/docker-compose.yml $*"
 
 echo "Running: ${COMMAND}"
 eval "${COMMAND}"
