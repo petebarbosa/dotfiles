@@ -1,3 +1,5 @@
+<!-- Context: openagents-repo/lookup | Priority: high | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Lookup: Command Reference
 
 **Purpose**: Quick reference for common commands
@@ -334,7 +336,7 @@ find .opencode/agent -name "{agent-name}.md"
 find evals/agents -name "*.yaml"
 
 # Find context
-find /home/petebarbosa/.config/opencode/context -name "*.md"
+find .opencode/context -name "*.md"
 
 # Find scripts
 find scripts -name "*.sh"

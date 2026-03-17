@@ -1,3 +1,5 @@
+<!-- Context: openagents-repo/guides | Priority: high | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Guide: Subagent Invocation
 
 **Purpose**: How to correctly invoke subagents using the task tool  
@@ -31,7 +33,7 @@ Based on the OpenCode CLI registration, use these exact strings for `subagent_ty
 
 **Code Subagents**:
 - `"Coder Agent"` - Code implementation
-- `"Tester"` - Test authoring
+- `"TestEngineer"` - Test authoring
 - `"Reviewer"` - Code review
 - `"Build Agent"` - Build validation
 
@@ -76,7 +78,7 @@ task(
 
 // ❌ Using registry path
 task(
-  subagent_type=".opencode/agent/TaskManager.md",
+  subagent_type=".opencode/agent/subagents/core/task-manager.md",
   ...
 )
 ```
@@ -97,7 +99,7 @@ cat registry.json | jq -r '.components.subagents[] | "\(.name)"'
 Task Manager
 Image Specialist
 Reviewer
-Tester
+TestEngineer
 Documentation Writer
 Coder Agent
 Build Agent
@@ -168,11 +170,11 @@ task(
 )
 ```
 
-### Tester
+### TestEngineer
 
 ```javascript
 task(
-  subagent_type="Tester",
+  subagent_type="TestEngineer",
   description="Write tests for feature",
   prompt="Write comprehensive tests for {feature}:
           
@@ -247,13 +249,13 @@ task(
 
 // ✅ Use direct operations instead
 // 1. Use glob to find context files
-glob(pattern="**/*.md", path="/home/petebarbosa/.config/opencode/context")
+glob(pattern="**/*.md", path=".opencode/context")
 
 // 2. Use grep to search content
-grep(pattern="registry", path="/home/petebarbosa/.config/opencode/context")
+grep(pattern="registry", path=".opencode/context")
 
 // 3. Read relevant files directly
-read(filePath="/home/petebarbosa/.config/opencode/context/openagents-repo/core-concepts/registry.md")
+read(filePath=".opencode/context/openagents-repo/core-concepts/registry.md")
 ```
 
 ---
@@ -296,7 +298,7 @@ read(filePath="/home/petebarbosa/.config/opencode/context/openagents-repo/core-c
 available_types = [
   "Task Manager",
   "Documentation",
-  "Tester",
+  "TestEngineer",
   "Reviewer",
   "Coder Agent",
   "Build Agent",
@@ -354,7 +356,7 @@ if subagent_type not in available_types:
 
 **Solutions**:
 1. Check subagent has required tools enabled
-2. Verify subagent permission allow operation
+2. Verify subagent permissions allow operation
 3. Check subagent prompt is clear and actionable
 
 ---

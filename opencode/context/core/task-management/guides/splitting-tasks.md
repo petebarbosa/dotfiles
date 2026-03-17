@@ -1,3 +1,5 @@
+<!-- Context: core/splitting-tasks | Priority: high | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Guide: Splitting Features into Tasks
 
 **Purpose**: How to decompose features into atomic subtasks
@@ -79,7 +81,7 @@ Concrete files/endpoints:
 Don't embed descriptions. Reference paths:
 ```json
 "context_files": [
-  "/home/petebarbosa/.config/opencode/context/development/backend/auth/jwt-patterns.md"
+  "(example: .opencode/context/development/backend/auth/jwt-patterns.md)"
 ]
 ```
 

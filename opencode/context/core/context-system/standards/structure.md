@@ -1,3 +1,5 @@
+<!-- Context: core/structure | Priority: critical | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Context Structure
 
 **Purpose**: Function-based folder organization for easy discovery
@@ -20,7 +22,7 @@
 </rule>
 
 ```
-/home/petebarbosa/.config/opencode/context/{category}/
+.opencode/context/{category}/
 ├── navigation.md              # Navigation map (REQUIRED)
 ├── concepts/              # What it is
 │   └── {topic}.md
@@ -149,17 +151,17 @@
 ### Concepts
 | File | Description | Priority |
 |------|-------------|----------|
-| [auth.md](concepts/auth.md) | Authentication patterns | critical |
+| concepts/auth.md | Authentication patterns | critical |
 
 ### Examples
 | File | Description | Priority |
 |------|-------------|----------|
-| [jwt.md](examples/jwt.md) | JWT auth example | high |
+| examples/jwt.md | JWT auth example | high |
 
 ### Errors
 | File | Description | Priority |
 |------|-------------|----------|
-| [react.md](errors/react.md) | Common React errors | high |
+| errors/react.md | Common React errors | high |
 
 ---
 

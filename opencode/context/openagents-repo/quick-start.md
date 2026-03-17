@@ -1,3 +1,5 @@
+<!-- Context: openagents-repo/quick-start | Priority: critical | Version: 1.0 | Updated: 2026-02-15 -->
+
 # OpenAgents Control Repository - Quick Start
 
 **Purpose**: Get oriented in this repo in 2 minutes
@@ -71,7 +73,7 @@ install.sh                               # Installer
 scripts/registry/validate-registry.sh    # Validate registry
 scripts/registry/auto-detect-components.sh # Auto-detect components
 scripts/validation/validate-test-suites.sh # Validate tests
-/home/petebarbosa/.config/opencode/context/                       # Context files
+.opencode/context/                       # Context files
 .opencode/command/                       # Slash commands
 docs/                                    # Documentation
 VERSION                                  # Current version

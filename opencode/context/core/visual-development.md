@@ -12,7 +12,7 @@
 | **Generate image/diagram** | This file | Image Specialist | tool:gemini |
 | **Edit existing image** | This file | Image Specialist | tool:gemini |
 | **UI mockup (static)** | This file | Image Specialist | tool:gemini |
-| **Interactive UI design** | `workflows/design-iteration.md` | - | - |
+| **Interactive UI design** | `workflows/design-iteration-overview.md` | - | - |
 | **Design system** | `ui/web/design-systems.md` | - | - |
 | **UI standards** | `ui/web/ui-styling-standards.md` | - | - |
 | **Animation patterns** | `ui/web/animation-patterns.md` | - | - |
@@ -59,7 +59,7 @@ task(
   subagent_type="Image Specialist",
   description="[Brief 3-5 word description]",
   prompt="Context to load:
-          - /home/petebarbosa/.config/opencode/context/core/visual-development.md
+          - .opencode/context/core/visual-development.md
           
           Task: [Detailed visual requirement]
           
@@ -302,7 +302,7 @@ User needs visual content
     ↓
 Is it interactive/responsive HTML/CSS?
     ↓
-  YES → Use design-iteration.md workflow
+  YES → Use design-iteration-overview.md workflow
     |    - Create HTML files
     |    - Iterate on designs
     |    - Production-ready code
@@ -322,13 +322,13 @@ Is it interactive/responsive HTML/CSS?
 
 | Need | Use |
 |------|-----|
-| **Interactive dashboard** | design-iteration.md |
+| **Interactive dashboard** | design-iteration-overview.md |
 | **Dashboard mockup (static image)** | Image Specialist |
-| **Responsive landing page** | design-iteration.md |
+| **Responsive landing page** | design-iteration-overview.md |
 | **Landing page hero graphic** | Image Specialist |
-| **Working HTML prototype** | design-iteration.md |
+| **Working HTML prototype** | design-iteration-overview.md |
 | **Architecture diagram** | Image Specialist |
-| **UI component library** | design-iteration.md |
+| **UI component library** | design-iteration-overview.md |
 | **Social media graphic** | Image Specialist |
 
 ---
@@ -447,12 +447,12 @@ After receiving output:
 
 ## Related Context
 
-- **UI Design Workflow**: `/home/petebarbosa/.config/opencode/context/core/workflows/design-iteration.md`
-- **Design Systems**: `/home/petebarbosa/.config/opencode/context/ui/web/design-systems.md`
-- **UI Styling Standards**: `/home/petebarbosa/.config/opencode/context/ui/web/ui-styling-standards.md`
-- **Animation Patterns**: `/home/petebarbosa/.config/opencode/context/ui/web/animation-patterns.md`
-- **Subagent Invocation Guide**: `/home/petebarbosa/.config/opencode/context/openagents-repo/guides/subagent-invocation.md`
-- **Agent Capabilities**: `/home/petebarbosa/.config/opencode/context/openagents-repo/core-concepts/agents.md`
+- **UI Design Workflow**: `.opencode/context/core/workflows/design-iteration-overview.md`
+- **Design Systems**: `.opencode/context/ui/web/design-systems.md`
+- **UI Styling Standards**: `.opencode/context/ui/web/ui-styling-standards.md`
+- **Animation Patterns**: `.opencode/context/ui/web/animation-basics.md`, `.opencode/context/ui/web/animation-advanced.md`
+- **Subagent Invocation Guide**: `.opencode/context/openagents-repo/guides/subagent-invocation.md`
+- **Agent Capabilities**: `.opencode/context/openagents-repo/core-concepts/agents.md`
 
 ---
 

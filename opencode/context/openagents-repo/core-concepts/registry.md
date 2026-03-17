@@ -1,3 +1,5 @@
+<!-- Context: openagents-repo/registry | Priority: high | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Core Concept: Registry System
 
 **Purpose**: Understanding how component tracking and distribution works  
@@ -48,7 +50,7 @@ The registry is a centralized catalog (`registry.json`) that tracks all componen
   "id": "frontend-specialist",
   "name": "Frontend Specialist",
   "type": "agent",
-  "path": ".opencode/agent/development/frontend-specialist.md",
+  "path": ".opencode/agent/subagents/development/frontend-specialist.md",
   "description": "Expert in React, Vue, and modern CSS",
   "category": "development",
   "tags": ["react", "vue", "css", "frontend"],
@@ -104,7 +106,7 @@ The auto-detect system scans `.opencode/` and automatically updates the registry
 ✅ **Subagents** - `.opencode/agent/subagents/**/*.md`  
 ✅ **Commands** - `.opencode/command/**/*.md`  
 ✅ **Tools** - `.opencode/tool/**/index.ts`  
-✅ **Contexts** - `/home/petebarbosa/.config/opencode/context/**/*.md`  
+✅ **Contexts** - `.opencode/context/**/*.md`  
 
 ### Frontmatter Requirements
 
@@ -146,7 +148,7 @@ tags: ["tag1", "tag2"]     # Optional
 
 ```bash
 # Example errors
-ERROR: Path does not exist: .opencode/agent/core/missing.md
+ERROR: Path does not exist: (example: .opencode/agent/core/missing.md)
 ERROR: Duplicate ID: frontend-specialist
 ERROR: Invalid category: invalid-category
 ERROR: Missing dependency: subagent:nonexistent

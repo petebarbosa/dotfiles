@@ -1,3 +1,5 @@
+<!-- Context: openagents-repo/examples | Priority: high | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Subagent Prompt Structure (Optimized)
 
 **Purpose**: Template for well-structured subagent prompts with tool usage emphasis
@@ -32,7 +34,7 @@ tools:
   bash: false
   edit: false
   write: false
-permission:
+permissions:
   bash: "*": "deny"
   edit: "**/*": "deny"
   write: "**/*": "deny"
@@ -268,8 +270,8 @@ Before deploying optimized prompt:
 - **Result**: Test passed (was failing with 0 tool calls)
 
 **Files**:
-- Optimized: `.opencode/agent/ContextScout.md`
-- Backup: `.opencode/agent/ContextScout-original-backup.md`
+- Optimized: `.opencode/agent/subagents/core/contextscout.md`
+- Backup: (example: `.opencode/agent/ContextScout-original-backup.md`)
 
 ---
 

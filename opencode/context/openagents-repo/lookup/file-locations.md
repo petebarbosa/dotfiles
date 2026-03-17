@@ -1,3 +1,5 @@
+<!-- Context: openagents-repo/lookup | Priority: high | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Lookup: File Locations
 
 **Purpose**: Quick reference for finding files
@@ -70,7 +72,7 @@ opencode-agents/
 | **Category agents** | `.opencode/agent/{category}/` |
 | **Subagents** | `.opencode/agent/subagents/` |
 | **Commands** | `.opencode/command/` |
-| **Context files** | `/home/petebarbosa/.config/opencode/context/` |
+| **Context files** | `.opencode/context/` |
 | **Prompt variants** | `.opencode/prompts/{category}/{agent}/` |
 | **Tools** | `.opencode/tool/` |
 | **Plugins** | `.opencode/plugin/` |
@@ -93,7 +95,7 @@ opencode-agents/
 | **New category agent** | `.opencode/agent/{category}/{name}.md` |
 | **New subagent** | `.opencode/agent/subagents/{category}/{name}.md` |
 | **New command** | `.opencode/command/{name}.md` |
-| **New context** | `/home/petebarbosa/.config/opencode/context/{category}/{name}.md` |
+| **New context** | `.opencode/context/{category}/{name}.md` |
 | **Agent tests** | `evals/agents/{category}/{agent}/tests/` |
 | **Test config** | `evals/agents/{category}/{agent}/config/config.yaml` |
 | **Documentation** | `docs/{section}/{topic}.md` |
@@ -126,11 +128,8 @@ README.md                            # Main documentation
 ### Development Agents
 
 ```
-.opencode/agent/development/frontend-specialist.md
-.opencode/agent/development/devops-specialist.md
-```
-.opencode/agent/development/frontend-specialist.md
-.opencode/agent/development/devops-specialist.md
+.opencode/agent/subagents/development/frontend-specialist.md
+.opencode/agent/subagents/development/devops-specialist.md
 ```
 
 ### Content Agents
@@ -143,22 +142,22 @@ README.md                            # Main documentation
 ### Key Subagents
 
 ```
-.opencode/agent/TestEngineer.md
-.opencode/agent/CodeReviewer.md
-.opencode/agent/CoderAgent.md
-.opencode/agent/TaskManager.md
-.opencode/agent/DocWriter.md
+.opencode/agent/subagents/code/test-engineer.md
+.opencode/agent/subagents/code/reviewer.md
+.opencode/agent/subagents/code/coder-agent.md
+.opencode/agent/subagents/core/task-manager.md
+.opencode/agent/subagents/core/documentation.md
 ```
 
 ### Core Context
 
 ```
-/home/petebarbosa/.config/opencode/context/core/standards/code-quality.md
-/home/petebarbosa/.config/opencode/context/core/standards/documentation.md
-/home/petebarbosa/.config/opencode/context/core/standards/test-coverage.md
-/home/petebarbosa/.config/opencode/context/core/standards/security-patterns.md
-/home/petebarbosa/.config/opencode/context/core/workflows/task-delegation.md
-/home/petebarbosa/.config/opencode/context/core/workflows/code-review.md
+.opencode/context/core/standards/code-quality.md
+.opencode/context/core/standards/documentation.md
+.opencode/context/core/standards/test-coverage.md
+.opencode/context/core/standards/security-patterns.md
+.opencode/context/core/workflows/task-delegation-basics.md
+.opencode/context/core/workflows/code-review.md
 ```
 
 ### Registry Scripts
@@ -198,20 +197,19 @@ evals/framework/src/types/            # TypeScript types
 ```
 
 **Examples**:
-- `.opencode/agent/core/openagent.md`
-- `.opencode/agent/development/frontend-specialist.md`
-- `.opencode/agent/TestEngineer.md`
+- `.opencode/agent/subagents/development/frontend-specialist.md`
+- `.opencode/agent/subagents/code/test-engineer.md`
 
 ### Context
 
 ```
-/home/petebarbosa/.config/opencode/context/{category}/{topic}.md
+.opencode/context/{category}/{topic}.md
 ```
 
 **Examples**:
-- `/home/petebarbosa/.config/opencode/context/core/standards/code-quality.md`
-- `/home/petebarbosa/.config/opencode/context/development/frontend/react/react-patterns.md`
-- `/home/petebarbosa/.config/opencode/context/content-creation/principles/copywriting-frameworks.md`
+- `.opencode/context/core/standards/code-quality.md`
+- `.opencode/context/ui/web/react-patterns.md`
+- `.opencode/context/content-creation/principles/copywriting-frameworks.md`
 
 ### Tests
 
@@ -284,10 +282,10 @@ find evals/agents -name "*.yaml"
 
 ```bash
 # By category
-ls /home/petebarbosa/.config/opencode/context/{category}/
+ls .opencode/context/{category}/
 
 # All context
-find /home/petebarbosa/.config/opencode/context -name "*.md"
+find .opencode/context -name "*.md"
 ```
 
 ### Find Script

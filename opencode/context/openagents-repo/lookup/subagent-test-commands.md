@@ -1,3 +1,5 @@
+<!-- Context: openagents-repo/lookup | Priority: high | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Subagent Testing Commands - Quick Reference
 
 **Purpose**: Quick command reference for testing subagents
@@ -45,10 +47,10 @@ npm run eval:sdk -- --agent=core/openagent --pattern="delegation/01-contextscout
 ### Check Agent File
 ```bash
 # View agent frontmatter
-head -30 .opencode/agent/ContextScout.md
+head -30 .opencode/agent/subagents/core/contextscout.md
 
-# Check tool permission
-grep -A 10 "^tools:" .opencode/agent/ContextScout.md
+# Check tool permissions
+grep -A 10 "^tools:" .opencode/agent/subagents/core/contextscout.md
 ```
 
 ### Check Test Config

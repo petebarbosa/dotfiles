@@ -1,3 +1,5 @@
+<!-- Context: core/context-guide | Priority: low | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Context System Guide
 
 ## Quick Reference
@@ -6,7 +8,7 @@
 
 **Key Principle**: Use context index for discovery, load specific files as needed
 
-**Index Location**: `/home/petebarbosa/.config/opencode/context/index.md` - Quick map of all contexts
+**Index Location**: `.opencode/context/navigation.md` - Quick map of all contexts
 
 **Structure**: standards/ (quality + analysis), workflows/ (process + review), system/ (internals)
 
@@ -20,7 +22,7 @@ Context files provide guidelines and templates for specific tasks. Use the index
 
 ## Context Index System
 
-**Central Index**: `/home/petebarbosa/.config/opencode/context/index.md` - Ultra-compact map of all contexts
+**Central Index**: `.opencode/context/navigation.md` - Ultra-compact map of all contexts
 
 The index provides:
 - Quick map for common tasks (code, docs, tests, review, delegation)
@@ -30,7 +32,7 @@ The index provides:
 
 ### Available Context Files
 
-All files are in `/home/petebarbosa/.config/opencode/context/core/` with organized subfolders:
+All files are in `.opencode/context/core/` with organized subfolders:
 
 ### Standards (Quality Guidelines + Analysis)
 - `standards/code-quality.md` - Modular, functional code principles [critical]
@@ -40,7 +42,7 @@ All files are in `/home/petebarbosa/.config/opencode/context/core/` with organiz
 - `standards/code-analysis.md` - Analysis framework [high]
 
 ### Workflows (Process Templates + Review)
-- `workflows/task-delegation.md` - Delegation template [high]
+- `workflows/task-delegation-basics.md` - Delegation template [high]
 - `workflows/feature-breakdown.md` - Complex task breakdown [high]
 - `workflows/session-management.md` - Session lifecycle [medium]
 - `workflows/code-review.md` - Code review guidelines [high]
@@ -53,7 +55,7 @@ All files are in `/home/petebarbosa/.config/opencode/context/core/` with organiz
 - Review task? → Load `workflows/code-review.md`
 
 **Step 2: Load Index** (for keyword matching)
-- Load `/home/petebarbosa/.config/opencode/context/index.md`
+- Load `.opencode/context/navigation.md`
 - Scan triggers to find relevant contexts
 - Load specific context files as needed
 
@@ -69,48 +71,48 @@ All files are in `/home/petebarbosa/.config/opencode/context/core/` with organiz
 
 ## When to Use Each File
 
-### /home/petebarbosa/.config/opencode/context/core/standards/code-quality.md
+### .opencode/context/core/standards/code-quality.md
 - Writing new code
 - Modifying existing code
 - Following modular/functional patterns
 - Making architectural decisions
 
-### /home/petebarbosa/.config/opencode/context/core/standards/documentation.md
+### .opencode/context/core/standards/documentation.md
 - Writing README files
 - Creating API documentation
 - Adding code comments
 
-### /home/petebarbosa/.config/opencode/context/core/standards/test-coverage.md
+### .opencode/context/core/standards/test-coverage.md
 - Writing new tests
 - Running test suites
 - Debugging test failures
 
-### /home/petebarbosa/.config/opencode/context/core/standards/security-patterns.md
+### .opencode/context/core/standards/security-patterns.md
 - Error handling
 - Security patterns
 - Common code patterns
 
-### /home/petebarbosa/.config/opencode/context/core/standards/code-analysis.md
+### .opencode/context/core/standards/code-analysis.md
 - Analyzing codebase patterns
 - Investigating bugs
 - Evaluating architecture
 
-### /home/petebarbosa/.config/opencode/context/core/workflows/task-delegation.md
+### .opencode/context/core/workflows/task-delegation-basics.md
 - Delegating to general agent
 - Creating task context
 - Multi-file coordination
 
-### /home/petebarbosa/.config/opencode/context/core/workflows/feature-breakdown.md
+### .opencode/context/core/workflows/feature-breakdown.md
 - Tasks with 4+ files
 - Estimated effort >60 minutes
 - Complex dependencies
 
-### /home/petebarbosa/.config/opencode/context/core/workflows/session-management.md
+### .opencode/context/core/workflows/session-management.md
 - Session lifecycle
 - Cleanup procedures
 - Session isolation
 
-### /home/petebarbosa/.config/opencode/context/core/workflows/code-review.md
+### .opencode/context/core/workflows/code-review.md
 - Reviewing code
 - Conducting code audits
 - Providing PR feedback
@@ -143,8 +145,8 @@ Status: in_progress
 - {file 1} - {purpose}
 
 ## Static Context Available
-- /home/petebarbosa/.config/opencode/context/core/standards/code-quality.md
-- /home/petebarbosa/.config/opencode/context/core/standards/test-coverage.md
+- .opencode/context/core/standards/code-quality.md
+- .opencode/context/core/standards/test-coverage.md
 
 ## Constraints/Notes
 {Important context}

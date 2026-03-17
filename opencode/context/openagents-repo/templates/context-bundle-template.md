@@ -1,3 +1,5 @@
+<!-- Context: openagents-repo/context-bundle-template | Priority: low | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Context Bundle Template
 
 **Purpose**: Template for creating context bundles when delegating tasks to subagents
@@ -29,36 +31,36 @@ Status: in_progress
 ## Relevant Standards (Load These Before Starting)
 
 **Core Standards**:
-- `/home/petebarbosa/.config/opencode/context/core/standards/code.md` → Modular, functional code patterns
-- `/home/petebarbosa/.config/opencode/context/core/standards/tests.md` → Testing requirements and TDD
-- `/home/petebarbosa/.config/opencode/context/core/standards/docs.md` → Documentation standards
-- `/home/petebarbosa/.config/opencode/context/core/standards/patterns.md` → Error handling, security patterns
+- `.opencode/context/core/standards/code.md` → Modular, functional code patterns
+- `.opencode/context/core/standards/tests.md` → Testing requirements and TDD
+- `.opencode/context/core/standards/docs.md` → Documentation standards
+- (example: `.opencode/context/core/standards/patterns.md`) → Error handling, security patterns
 
 **Core Workflows**:
-- `/home/petebarbosa/.config/opencode/context/core/workflows/delegation.md` → Delegation process
-- `/home/petebarbosa/.config/opencode/context/core/workflows/task-breakdown.md` → Task breakdown methodology
-- `/home/petebarbosa/.config/opencode/context/core/workflows/review.md` → Code review guidelines
+- (example: `.opencode/context/core/workflows/delegation.md`) → Delegation process
+- (example: `.opencode/context/core/workflows/task-breakdown.md`) → Task breakdown methodology
+- (example: `.opencode/context/core/workflows/review.md`) → Code review guidelines
 
 ## Repository-Specific Context (Load These Before Starting)
 
 **Quick Start** (ALWAYS load first):
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/quick-start.md` → Repo orientation and common commands
+- `.opencode/context/openagents-repo/quick-start.md` → Repo orientation and common commands
 
 **Core Concepts** (Load based on task type):
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/core-concepts/agents.md` → How agents work
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/core-concepts/evals.md` → How testing works
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/core-concepts/registry.md` → How registry works
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/core-concepts/categories.md` → How organization works
+- `.opencode/context/openagents-repo/core-concepts/agents.md` → How agents work
+- `.opencode/context/openagents-repo/core-concepts/evals.md` → How testing works
+- `.opencode/context/openagents-repo/core-concepts/registry.md` → How registry works
+- `.opencode/context/openagents-repo/core-concepts/categories.md` → How organization works
 
 **Guides** (Load for specific workflows):
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/guides/adding-agent.md` → Step-by-step agent creation
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/guides/testing-agent.md` → Testing workflow
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/guides/updating-registry.md` → Registry workflow
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/guides/debugging.md` → Troubleshooting
+- `.opencode/context/openagents-repo/guides/adding-agent-basics.md` → Step-by-step agent creation
+- `.opencode/context/openagents-repo/guides/testing-agent.md` → Testing workflow
+- `.opencode/context/openagents-repo/guides/updating-registry.md` → Registry workflow
+- `.opencode/context/openagents-repo/guides/debugging.md` → Troubleshooting
 
 **Lookup** (Quick reference):
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/lookup/file-locations.md` → Where everything is
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/lookup/commands.md` → Command reference
+- `.opencode/context/openagents-repo/lookup/file-locations.md` → Where everything is
+- `.opencode/context/openagents-repo/lookup/commands.md` → Command reference
 
 ## Key Requirements
 
@@ -197,7 +199,7 @@ Create a context bundle when:
 
 2. **Copy template**:
    ```bash
-   cp /home/petebarbosa/.config/opencode/context/openagents-repo/templates/context-bundle-template.md \
+   cp .opencode/context/openagents-repo/templates/context-bundle-template.md \
       .tmp/context/{session-id}/bundle.md
    ```
 
@@ -240,7 +242,7 @@ Create a context bundle when:
 
 ### Example Context Bundle
 
-See `/home/petebarbosa/.config/opencode/context/openagents-repo/examples/context-bundle-example.md` for a complete example.
+See `.opencode/context/openagents-repo/examples/context-bundle-example.md` for a complete example.
 
 ---
 

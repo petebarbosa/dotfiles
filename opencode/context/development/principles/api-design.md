@@ -1,3 +1,5 @@
+<!-- Context: development/api-design | Priority: low | Version: 1.0 | Updated: 2026-02-15 -->
+
 # API Design Patterns
 
 **Category**: development  
@@ -368,7 +370,7 @@ function authorize(...roles) {
     }
     
     if (!roles.includes(req.user.role)) {
-      return res.status(403).json({ error: 'Insufficient permission' });
+      return res.status(403).json({ error: 'Insufficient permissions' });
     }
     
     next();

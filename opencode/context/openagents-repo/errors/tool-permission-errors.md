@@ -1,3 +1,5 @@
+<!-- Context: openagents-repo/errors | Priority: medium | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Tool Permission Errors
 
 **Purpose**: Diagnose and fix tool permission issues in agents
@@ -92,7 +94,7 @@ tools:
   write: false   # ← No file creation
   task: false    # ← No delegation (subagents don't delegate)
 
-permission:
+permissions:
   bash:
     "*": "deny"
   edit:
@@ -222,4 +224,4 @@ After fixing tool permission:
 - `guides/testing-subagents.md` - How to test subagents
 - `examples/subagent-prompt-structure.md` - Prompt structure with tool emphasis
 
-**Reference**: `.opencode/agent/ContextScout.md` (lines 14-28, tool configuration)
+**Reference**: `.opencode/agent/subagents/core/contextscout.md` (tool configuration)

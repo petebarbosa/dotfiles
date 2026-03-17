@@ -5,102 +5,116 @@
     "opencode-mystatus",
     "@howaboua/opencode-planning-toolkit@latest"
   ],
-  "theme": "system",
-  "command": {
-    "my-status": {
-      "description": "Query quota usage for all AI accounts",
-      "template": "Use the mystatus tool to query quota usage. Return the result as-is without modification."
-    },
-    "map-status": {
-      "description": "Query roadmap status",
-      "template": "Use roadmap tool and query our project status."
-    },
-    "map-update": {
-      "description": "Update roadmap",
-      "template": "Update the roadmap with our new implementation"
-    }
-  },
   "provider": {
-    "google": {
+    "ollama": {
       "models": {
-        "antigravity-gemini-3-pro": {
-          "name": "Gemini 3 Pro (Antigravity)",
-          "limit": { "context": 1048576, "output": 65535 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] },
-          "variants": {
-            "low": { "thinkingLevel": "low" },
-            "high": { "thinkingLevel": "high" }
-          }
+        "glm-5:cloud": {
+          "_launch": true,
+          "limit": {
+            "context": 202752,
+            "output": 131072
+          },
+          "name": "glm-5:cloud"
         },
-        "antigravity-gemini-3.1-pro": {
-          "name": "Gemini 3.1 Pro (Antigravity)",
-          "limit": { "context": 1048576, "output": 65535 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] },
-          "variants": {
-            "low": { "thinkingLevel": "low" },
-            "high": { "thinkingLevel": "high" }
-          }
+        "kimi-k2.5:cloud": {
+          "_launch": true,
+          "limit": {
+            "context": 262144,
+            "output": 262144
+          },
+          "name": "kimi-k2.5:cloud"
         },
-        "antigravity-gemini-3-flash": {
-          "name": "Gemini 3 Flash (Antigravity)",
-          "limit": { "context": 1048576, "output": 65536 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] },
-          "variants": {
-            "minimal": { "thinkingLevel": "minimal" },
-            "low": { "thinkingLevel": "low" },
-            "medium": { "thinkingLevel": "medium" },
-            "high": { "thinkingLevel": "high" }
-          }
-        },
-        "antigravity-claude-sonnet-4-6": {
-          "name": "Claude Sonnet 4.6 (Antigravity)",
-          "limit": { "context": 200000, "output": 64000 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
-        },
-        "antigravity-claude-opus-4-6-thinking": {
-          "name": "Claude Opus 4.6 Thinking (Antigravity)",
-          "limit": { "context": 200000, "output": 64000 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] },
-          "variants": {
-            "low": { "thinkingConfig": { "thinkingBudget": 8192 } },
-            "max": { "thinkingConfig": { "thinkingBudget": 32768 } }
-          }
-        },
-        "gemini-2.5-flash": {
-          "name": "Gemini 2.5 Flash (Gemini CLI)",
-          "limit": { "context": 1048576, "output": 65536 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
-        },
-        "gemini-2.5-pro": {
-          "name": "Gemini 2.5 Pro (Gemini CLI)",
-          "limit": { "context": 1048576, "output": 65536 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
-        },
-        "gemini-3-flash-preview": {
-          "name": "Gemini 3 Flash Preview (Gemini CLI)",
-          "limit": { "context": 1048576, "output": 65536 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
-        },
-        "gemini-3-pro-preview": {
-          "name": "Gemini 3 Pro Preview (Gemini CLI)",
-          "limit": { "context": 1048576, "output": 65535 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
-        },
-        "gemini-3.1-pro-preview": {
-          "name": "Gemini 3.1 Pro Preview (Gemini CLI)",
-          "limit": { "context": 1048576, "output": 65535 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
-        },
-        "gemini-3.1-pro-preview-customtools": {
-          "name": "Gemini 3.1 Pro Preview Custom Tools (Gemini CLI)",
-          "limit": { "context": 1048576, "output": 65535 },
-          "modalities": { "input": ["text", "image", "pdf"], "output": ["text"] }
+        "minimax-m2.5:cloud": {
+          "_launch": true,
+          "limit": {
+            "context": 204800,
+            "output": 128000
+          },
+          "name": "minimax-m2.5:cloud"
         }
+      },
+      "name": "Ollama",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:11434/v1"
       }
     }
-  }
-}
-  "permission": {
-    "read": "allow"
+  },
+  "agent": {
+    "build": {
+      "description": "Build agent - hidden from autocomplete",
+      "mode": "primary",
+      "hidden": true
+    },
+    "plan": {
+      "description": "Plan agent - hidden from autocomplete",
+      "mode": "primary",
+      "hidden": true
+    },
+    "general": {
+      "description": "General-purpose agent for researching complex questions and executing multi-step tasks",
+      "mode": "subagent",
+      "model": "opencode/minimax-m2.5-free"
+    },
+    "explore": {
+      "description": "Read-only subagent for fast codebase exploration at different thoroughness levels",
+      "mode": "subagent",
+      "model": "opencode/minimax-m2.5-free"
+    },
+    "CoderAgent": {
+      "description": "Executes coding subtasks in sequence, ensuring completion as specified",
+      "mode": "subagent",
+      "model": "opencode/kimi-k2.5"
+    },
+    "CodeReviewer": {
+      "description": "Code review, security, and quality assurance agent",
+      "mode": "subagent",
+      "model": "opencode/kimi-k2.5"
+    },
+    "BuildAgent": {
+      "description": "Type check and build validation agent",
+      "mode": "subagent",
+      "model": "opencode/minimax-m2.5-free"
+    },
+    "TestEngineer": {
+      "description": "Test authoring and TDD agent",
+      "mode": "subagent",
+      "model": "opencode/minimax-m2.5-free"
+    },
+    "OpenDevopsSpecialist": {
+      "description": "DevOps specialist for CI/CD, infrastructure as code, deployment",
+      "mode": "subagent",
+      "model": "opencode/kimi-k2.5"
+    },
+    "OpenFrontendSpecialist": {
+      "description": "Frontend UI design specialist for design systems, themes, animations",
+      "mode": "subagent",
+      "model": "opencode/kimi-k2.5"
+    },
+    "ContextOrganizer": {
+      "description": "Organizes and generates context files for optimal knowledge management",
+      "mode": "subagent",
+      "model": "opencode/minimax-m2.5-free"
+    },
+    "DocWriter": {
+      "description": "Documentation authoring agent",
+      "mode": "subagent",
+      "model": "opencode/minimax-m2.5-free"
+    },
+    "ExternalScout": {
+      "description": "Fetches live, version-specific documentation for libraries and frameworks",
+      "mode": "subagent",
+      "model": "opencode/minimax-m2.5-free"
+    },
+    "ContextScout": {
+      "description": "Discovers and recommends context files from .opencode/context/",
+      "mode": "subagent",
+      "model": "opencode/minimax-m2.5-free"
+    },
+    "TaskManager": {
+      "description": "JSON-driven task breakdown specialist with dependency tracking",
+      "mode": "subagent",
+      "model": "opencode/kimi-k2.5"
+    }
   }
 }

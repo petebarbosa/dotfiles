@@ -1,0 +1,30 @@
+{
+  "skill_name": "opencode-agent-creation",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create an OpenCode subagent for code review with read-only access and a markdown agent file.",
+      "expected_output": "Produces a scoped review subagent, chooses markdown format, and keeps tools read-only."
+    },
+    {
+      "id": 2,
+      "prompt": "Make a primary planning agent in opencode.json that asks before edits and most bash commands.",
+      "expected_output": "Produces JSON config with primary mode and restrictive permission settings."
+    },
+    {
+      "id": 3,
+      "prompt": "Help me decide whether this OpenCode workflow should use a custom subagent or the built-in explore agent.",
+      "expected_output": "Compares the custom agent need against built-ins and recommends the narrower option."
+    },
+    {
+      "id": 4,
+      "prompt": "Create a skill for reviewing code.",
+      "expected_output": "Should not trigger this skill because the request is about skill creation, not OpenCode agent creation."
+    },
+    {
+      "id": 5,
+      "prompt": "Explain Claude Agent SDK capabilities.",
+      "expected_output": "Should not trigger this skill because the request is outside OpenCode agent authoring."
+    }
+  ]
+}

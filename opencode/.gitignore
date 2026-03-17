@@ -1,10 +1,18 @@
 node_modules
 package.json
-package-lock.json
 bun.lock
 .gitignore
+
+# Sensitive: OAuth tokens, refresh tokens, device fingerprints
 antigravity-accounts.json
 antigravity-accounts.json.*.tmp
 antigravity-signature-cache.json
 antigravity-logs/
-copilot-quota-token.json
+
+# Environment files with real API keys/tokens
+.env
+.env.*
+!env.example
+
+# Machine-specific config with absolute paths
+context/core/config/paths.json

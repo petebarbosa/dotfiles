@@ -114,9 +114,9 @@ task(
   subagent_type="frontend-specialist",
   description="Create landing page design",
   prompt="Context to load:
-  - /home/petebarbosa/.config/opencode/context/ui/web/design-systems.md
-  - /home/petebarbosa/.config/opencode/context/ui/web/ui-styling-standards.md
-  - /home/petebarbosa/.config/opencode/context/ui/web/animation-patterns.md
+  - .opencode/context/ui/web/design-systems.md
+  - .opencode/context/ui/web/ui-styling-standards.md
+  - .opencode/context/ui/web/animation-basics.md
   
   Task: Create a landing page with:
   - Hero section with headline, subheadline, CTA button
@@ -292,7 +292,7 @@ The frontend-specialist will automatically load these via ContextScout:
 - `development/frontend/react/react-patterns.md` - React patterns (if React project)
 
 **Workflows**:
-- `core/workflows/design-iteration.md` - Design iteration workflow
+- `core/workflows/design-iteration-overview.md` - Design iteration workflow
 
 ---
 
@@ -351,9 +351,9 @@ task(
   subagent_type="frontend-specialist",
   description="Create SaaS landing page",
   prompt="Context to load:
-  - /home/petebarbosa/.config/opencode/context/ui/web/design-systems.md
-  - /home/petebarbosa/.config/opencode/context/ui/web/ui-styling-standards.md
-  - /home/petebarbosa/.config/opencode/context/ui/web/animation-patterns.md
+  - .opencode/context/ui/web/design-systems.md
+  - .opencode/context/ui/web/ui-styling-standards.md
+  - .opencode/context/ui/web/animation-basics.md
   
   Task: Create a SaaS landing page with:
   - Hero section (headline, subheadline, CTA)
@@ -415,8 +415,8 @@ task(
   subagent_type="frontend-specialist",
   description="Implement Tailwind + Shadcn design system",
   prompt="Context to load:
-  - /home/petebarbosa/.config/opencode/context/ui/web/design-systems.md
-  - /home/petebarbosa/.config/opencode/context/ui/web/ui-styling-standards.md
+  - .opencode/context/ui/web/design-systems.md
+  - .opencode/context/ui/web/ui-styling-standards.md
   
   Task: Implement design system using Tailwind CSS and Shadcn/ui
   
@@ -464,5 +464,5 @@ task(
 - **Design Systems** → `../../ui/web/design-systems.md`
 - **UI Styling Standards** → `../../ui/web/ui-styling-standards.md`
 - **Animation Patterns** → `../../ui/web/animation-patterns.md`
-- **Delegation Workflow** → `../../core/workflows/task-delegation.md`
+- **Delegation Workflow** → `../../core/workflows/task-delegation-basics.md`
 - **React Patterns** → `react/react-patterns.md`

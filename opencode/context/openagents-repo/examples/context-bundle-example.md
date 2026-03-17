@@ -1,3 +1,5 @@
+<!-- Context: openagents-repo/examples | Priority: high | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Context Bundle Example: Create Data Analyst Agent
 
 Session: 20250121-143022-a4f2
@@ -16,28 +18,28 @@ Create a new data analyst agent for the OpenAgents Control repository. This agen
 ## Relevant Standards (Load These Before Starting)
 
 **Core Standards**:
-- `/home/petebarbosa/.config/opencode/context/core/standards/code-quality.md` → Modular, functional code patterns
-- `/home/petebarbosa/.config/opencode/context/core/standards/test-coverage.md` → Testing requirements and TDD
-- `/home/petebarbosa/.config/opencode/context/core/standards/documentation.md` → Documentation standards
+- `.opencode/context/core/standards/code-quality.md` → Modular, functional code patterns
+- `.opencode/context/core/standards/test-coverage.md` → Testing requirements and TDD
+- `.opencode/context/core/standards/documentation.md` → Documentation standards
 
 **Core Workflows**:
-- `/home/petebarbosa/.config/opencode/context/core/workflows/feature-breakdown.md` → Task breakdown methodology
+- `.opencode/context/core/workflows/feature-breakdown.md` → Task breakdown methodology
 
 ## Repository-Specific Context (Load These Before Starting)
 
 **Quick Start** (ALWAYS load first):
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/quick-start.md` → Repo orientation and common commands
+- `.opencode/context/openagents-repo/quick-start.md` → Repo orientation and common commands
 
 **Core Concepts** (Load based on task type):
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/core-concepts/agents.md` → How agents work
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/core-concepts/evals.md` → How testing works
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/core-concepts/registry.md` → How registry works
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/core-concepts/categories.md` → How organization works
+- `.opencode/context/openagents-repo/core-concepts/agents.md` → How agents work
+- `.opencode/context/openagents-repo/core-concepts/evals.md` → How testing works
+- `.opencode/context/openagents-repo/core-concepts/registry.md` → How registry works
+- `.opencode/context/openagents-repo/core-concepts/categories.md` → How organization works
 
 **Guides** (Load for specific workflows):
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/guides/adding-agent.md` → Step-by-step agent creation
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/guides/testing-agent.md` → Testing workflow
-- `/home/petebarbosa/.config/opencode/context/openagents-repo/guides/updating-registry.md` → Registry workflow
+- `.opencode/context/openagents-repo/guides/adding-agent-basics.md` → Step-by-step agent creation
+- `.opencode/context/openagents-repo/guides/testing-agent.md` → Testing workflow
+- `.opencode/context/openagents-repo/guides/updating-registry.md` → Registry workflow
 
 ## Key Requirements
 
@@ -52,7 +54,7 @@ Create a new data analyst agent for the OpenAgents Control repository. This agen
 - Must include proper frontmatter metadata (id, name, description, category, type, version, etc.)
 - Must follow naming convention: `data-analyst.md` (kebab-case)
 - Must include tags for discoverability
-- Must specify tools and permission
+- Must specify tools and permissions
 - Must be registered in `registry.json`
 
 **Naming Conventions**:
@@ -73,7 +75,7 @@ Create a new data analyst agent for the OpenAgents Control repository. This agen
 - Must use category-based organization (data category)
 - Must include proper frontmatter metadata
 - Must specify tools needed (read, write, bash, etc.)
-- Must define permission for sensitive operations
+- Must define permissions for sensitive operations
 - Must include temperature setting (0.1-0.3 for analytical tasks)
 - Must follow agent prompt structure (context, role, task, instructions)
 - Eval tests must use YAML format
@@ -90,7 +92,7 @@ Create a new data analyst agent for the OpenAgents Control repository. This agen
 
 **Modify**:
 - `registry.json` - Add data-analyst agent entry
-- `/home/petebarbosa/.config/opencode/context/index.md` - Add data category context if needed
+- `.opencode/context/navigation.md` - Add data category context if needed
 
 ## Success Criteria
 
@@ -115,7 +117,7 @@ Create a new data analyst agent for the OpenAgents Control repository. This agen
 
 **Manual Checks**:
 - Verify frontmatter includes all required fields
-- Check that tools and permission are appropriate
+- Check that tools and permissions are appropriate
 - Ensure prompt is clear and follows standards
 - Verify eval tests are meaningful
 
@@ -165,7 +167,7 @@ Create a complete data analyst agent for the OpenAgents Control repository follo
 **Approach**:
 1. **Load Context**: Read all context files listed above to understand:
    - How agents are structured (core-concepts/agents.md)
-   - How to add an agent (guides/adding-agent.md)
+   - How to add an agent (guides/adding-agent-basics.md)
    - Code standards (standards/code-quality.md)
    - Testing requirements (core-concepts/evals.md)
 

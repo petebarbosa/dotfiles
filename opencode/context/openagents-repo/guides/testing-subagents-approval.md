@@ -1,3 +1,5 @@
+<!-- Context: openagents-repo/guides | Priority: high | Version: 1.0 | Updated: 2026-02-15 -->
+
 ---
 description: "Guide for testing subagents and handling approval gates"
 type: "context"
@@ -127,9 +129,9 @@ tags:
 
 ## Related Files
 
-- **Testing subagents**: `/home/petebarbosa/.config/opencode/context/openagents-repo/guides/testing-subagents.md`
-- **Subagent invocation**: `/home/petebarbosa/.config/opencode/context/openagents-repo/guides/subagent-invocation.md`
-- **Agent concepts**: `/home/petebarbosa/.config/opencode/context/openagents-repo/core-concepts/agents.md`
+- **Testing subagents**: `.opencode/context/openagents-repo/guides/testing-subagents.md`
+- **Subagent invocation**: `.opencode/context/openagents-repo/guides/subagent-invocation.md`
+- **Agent concepts**: `.opencode/context/openagents-repo/core-concepts/agents.md`
 
 ---
 

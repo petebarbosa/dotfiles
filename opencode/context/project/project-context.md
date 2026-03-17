@@ -1,3 +1,5 @@
+<!-- Context: project/project-context | Priority: low | Version: 1.0 | Updated: 2026-02-15 -->
+
 <!-- DEPRECATED: 2026-01-12 - Replaced by project-intelligence/technical-domain.md -->
 <!-- REPLACED BY: ../project-intelligence/technical-domain.md -->
 
@@ -36,7 +38,7 @@ tasks/               # Task management files
 description: "What this agent does"
 mode: primary|subagent
 tools: [read, edit, bash, etc.]
-permission: [security restrictions]
+permissions: [security restrictions]
 ---
 
 # Agent Name
@@ -66,7 +68,7 @@ You are [doing specific task].
 **Request:** $ARGUMENTS
 
 **Context Loaded:**
-@/home/petebarbosa/.config/opencode/context/core/essential-patterns.md
+@.opencode/context/core/essential-patterns.md
 @[additional context files]
 
 Execute [task] now.
@@ -80,7 +82,7 @@ Execute [task] now.
 
 ## Security Guidelines
 
-- Agents have restricted permission by default
+- Agents have restricted permissions by default
 - Sensitive operations require explicit approval
 - No direct file system modifications without validation
 - Build commands limited to safe operations

@@ -102,7 +102,7 @@ Based on [OpenCode documentation](https://opencode.ai/docs/agents/), these are t
 - `prompt` - Custom prompt file path (e.g., `{file:./prompts/build.txt}`)
 - `hidden` - Hide from @ autocomplete (subagents only)
 - `tools` - Tool access configuration
-- `permission` - Permission rules for tools
+- `permission` - Permission rules for tools (v1.1.1+, replaces deprecated `permissions`)
 
 ### Example Valid Frontmatter
 
@@ -118,7 +118,7 @@ tools:
   glob: true
   write: false
   edit: false
-permission:
+permission:  # v1.1.1+ (singular, not plural)
   bash:
     "*": ask
     "git *": allow
@@ -311,7 +311,7 @@ vim .opencode/config/agent-metadata.json
 
 ### Updating Agent Metadata
 
-**To update OpenCode configuration** (tools, permission, temperature):
+**To update OpenCode configuration** (tools, permissions, temperature):
 ```bash
 # Edit agent file frontmatter
 vim .opencode/agent/category/my-agent.md
@@ -381,6 +381,37 @@ Then run:
 ---
 
 ## Migration Guide
+
+### Migrating from permissions (plural) to permission (singular)
+
+**OpenCode v1.1.1+ Change**: The field name changed from `permissions:` (plural) to `permission:` (singular).
+
+**Before** (deprecated):
+```yaml
+permissions:
+  bash:
+    "*": "deny"
+```
+
+**After** (v1.1.1+):
+```yaml
+permission:
+  bash:
+    "*": "deny"
+```
+
+**Migration Steps**:
+1. Find all agents using `permissions:` (plural)
+   ```bash
+   grep -r "^permissions:" .opencode/agent/
+   ```
+
+2. Replace with `permission:` (singular) in each file
+
+3. Verify no validation errors:
+   ```bash
+   opencode agent validate
+   ```
 
 ### Migrating Existing Agents
 
@@ -518,9 +549,9 @@ jq 'del(.components.agents[] | select(.id == "agent-id"))' registry.json > tmp.j
 ## Related Files
 
 - **OpenCode Agent Docs**: https://opencode.ai/docs/agents/
-- **Registry System**: `/home/petebarbosa/.config/opencode/context/openagents-repo/core-concepts/registry.md`
-- **Adding Agents**: `/home/petebarbosa/.config/opencode/context/openagents-repo/guides/adding-agent.md`
-- **Dependencies**: `/home/petebarbosa/.config/opencode/context/openagents-repo/quality/registry-dependencies.md`
+- **Registry System**: `.opencode/context/openagents-repo/core-concepts/registry.md`
+- **Adding Agents**: `.opencode/context/openagents-repo/guides/adding-agent-basics.md`
+- **Dependencies**: `.opencode/context/openagents-repo/quality/registry-dependencies.md`
 
 ---
 

@@ -182,10 +182,10 @@ The system supports multiple path formats for backward compatibility:
 "core/openagent" → resolves to → ".opencode/agent/core/openagent.md"
 
 # Full category path
-"development/frontend-specialist" → resolves to → ".opencode/agent/development/frontend-specialist.md"
+"development/frontend-specialist" → resolves to → ".opencode/agent/subagents/development/frontend-specialist.md"
 
 # Subagent path
-"TestEngineer" → resolves to → ".opencode/agent/TestEngineer.md"
+"TestEngineer" → resolves to → ".opencode/agent/subagents/code/test-engineer.md"
 ```
 
 ### Resolution Rules
@@ -232,7 +232,7 @@ Agents should load relevant context files based on task type:
 <!-- Context: standards/code | Priority: critical -->
 ```
 
-Loads: `/home/petebarbosa/.config/opencode/context/core/standards/code-quality.md`
+Loads: `.opencode/context/core/standards/code-quality.md`
 
 ### Category Context
 
@@ -240,7 +240,7 @@ Loads: `/home/petebarbosa/.config/opencode/context/core/standards/code-quality.m
 <!-- Context: development/react-patterns | Priority: high -->
 ```
 
-Loads: `/home/petebarbosa/.config/opencode/context/development/react-patterns.md`
+Loads: `.opencode/context/ui/web/react-patterns.md`
 
 ### Multiple Contexts
 

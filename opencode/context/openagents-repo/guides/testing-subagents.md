@@ -1,3 +1,5 @@
+<!-- Context: openagents-repo/guides | Priority: high | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Testing Subagents - Step-by-Step Guide
 
 **Purpose**: How to test subagents in standalone mode
@@ -54,10 +56,10 @@ npm run eval:sdk -- --subagent=contextscout --pattern="01-test.yaml" --debug
 
 ```bash
 # Check agent file
-cat .opencode/agent/ContextScout.md | head -20
+cat .opencode/agent/subagents/core/contextscout.md | head -20
 
 # Verify frontmatter
-grep -A 5 "^id:" .opencode/agent/ContextScout.md
+grep -A 5 "^id:" .opencode/agent/subagents/core/contextscout.md
 ```
 
 **Expected**:
@@ -147,7 +149,7 @@ Tool Calls: 1
 Tools Used: glob
 
 Tool Call Details:
-  1. glob: {"pattern":"*.md","path":"/home/petebarbosa/.config/opencode/context/core"}
+  1. glob: {"pattern":"*.md","path":".opencode/context/core"}
 ```
 
 **Red Flags**:
@@ -244,17 +246,17 @@ evals/agents/ContextScout/tests/
 ```yaml
 prompts:
   - text: |
-      List all markdown files in /home/petebarbosa/.config/opencode/context/core/
+      List all markdown files in .opencode/context/core/
 ```
 
 ✅ **Explicit** (works):
 ```yaml
 prompts:
   - text: |
-      Use the glob tool to find all markdown files in /home/petebarbosa/.config/opencode/context/core/
+      Use the glob tool to find all markdown files in .opencode/context/core/
       
       You MUST use the glob tool like this:
-      glob(pattern="*.md", path="/home/petebarbosa/.config/opencode/context/core")
+      glob(pattern="*.md", path=".opencode/context/core")
       
       Then list the files you found.
 ```
@@ -267,7 +269,7 @@ prompts:
 |---------|-------|-----|
 | OpenAgent runs instead | Used `--agent` flag | Use `--subagent` flag |
 | Tool calls: 0 | Prompt doesn't emphasize tools | Add critical rules section |
-| Permission denied | Tool restricted in frontmatter | Check `tools:` and `permission:` |
+| Permission denied | Tool restricted in frontmatter | Check `tools:` and `permissions:` |
 | Test timeout | Agent stuck/looping | Check prompt logic, add timeout |
 
 ---

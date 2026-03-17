@@ -105,7 +105,7 @@ evals/agents/{category}/        # Tests by category
 ├── frontend-specialist.md
 └── devops-specialist.md
 
-/home/petebarbosa/.config/opencode/context/development/
+.opencode/context/development/
 ├── navigation.md
 ├── clean-code.md
 ├── react-patterns.md
@@ -183,7 +183,7 @@ The system resolves agent paths flexibly:
 "subagents/development/frontend-specialist" → ".opencode/agent/subagents/development/frontend-specialist.md"
 
 # Subagent path
-"TestEngineer" → ".opencode/agent/TestEngineer.md"
+"TestEngineer" → ".opencode/agent/subagents/code/test-engineer.md"
 ```
 
 ---
@@ -197,7 +197,7 @@ The system resolves agent paths flexibly:
 mkdir -p .opencode/agent/{category}
 
 # Create context directory
-mkdir -p /home/petebarbosa/.config/opencode/context/{category}
+mkdir -p .opencode/context/{category}
 
 # Create eval directory
 mkdir -p evals/agents/{category}
@@ -220,7 +220,7 @@ EOF
 ### Step 3: Add Context README
 
 ```bash
-cat > /home/petebarbosa/.config/opencode/context/{category}/navigation.md << 'EOF'
+cat > .opencode/context/{category}/navigation.md << 'EOF'
 # Category Name Context
 
 Context files for {category} specialists.
@@ -286,7 +286,7 @@ EOF
 ### Category Context Structure
 
 ```
-/home/petebarbosa/.config/opencode/context/{category}/
+.opencode/context/{category}/
 ├── navigation.md               # Overview
 ├── {topic-1}.md           # Specific topic
 ├── {topic-2}.md           # Specific topic
@@ -301,7 +301,7 @@ Agents load category context based on task:
 <!-- Context: development/react-patterns | Priority: high -->
 ```
 
-Loads: `/home/petebarbosa/.config/opencode/context/development/react-patterns.md`
+Loads: `.opencode/context/ui/web/react-patterns.md`
 
 ---
 

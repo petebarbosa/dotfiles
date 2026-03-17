@@ -1,3 +1,5 @@
+<!-- Context: core/context-system | Priority: critical | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Context System
 
 **Purpose**: Minimal, concern-based knowledge organization for AI agents
@@ -100,7 +102,7 @@ Extract valuable context from AI summaries/overviews, then delete them. Workspac
 **Use for**: Repository-specific context (e.g., `openagents-repo/`)
 
 ```
-/home/petebarbosa/.config/opencode/context/{category}/
+.opencode/context/{category}/
 ├── navigation.md              # Fast, token-efficient navigation
 ├── quick-start.md             # Optional: 2-minute orientation
 │
@@ -136,7 +138,7 @@ Extract valuable context from AI summaries/overviews, then delete them. Workspac
 **Use for**: Multi-technology development context (e.g., `development/`)
 
 ```
-/home/petebarbosa/.config/opencode/context/{category}/
+.opencode/context/{category}/
 ├── navigation.md                       # Main navigation
 ├── {concern}-navigation.md             # Specialized navigation (optional)
 │
@@ -236,7 +238,7 @@ development/
 
 ### 1. Core Standards (Universal)
 
-Location: `/home/petebarbosa/.config/opencode/context/core/standards/`
+Location: `.opencode/context/core/standards/`
 
 **Purpose**: Universal standards that apply to ALL development
 
@@ -432,8 +434,17 @@ Data:     development/data/nosql-patterns/mongodb.md
 ## Quick Commands
 
 ```bash
-/context harvest              # Clean up summaries
-/context extract {source}     # From docs/code
-/context organize {category}  # Restructure
-/context update {what}        # When APIs change
+/context                      # Quick scan, suggest actions
+/context harvest              # Clean up summaries → permanent context
+/context extract {source}     # From docs/code/URLs
+/context organize {category}  # Restructure flat files → function folders
+/context update {what}        # When APIs/frameworks change
+/context migrate              # Move global project-intelligence → local project
+/context create {category}    # Create new context category
+/context error {error}        # Add recurring error to knowledge base
+/context compact {file}       # Minimize verbose file to MVI format
+/context map [category]       # View context structure
+/context validate             # Check integrity, references, sizes
 ```
+
+**All operations show a preview of what will be created/moved/deleted before asking for approval.**
