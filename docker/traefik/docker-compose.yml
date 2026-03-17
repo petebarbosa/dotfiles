@@ -1,7 +1,8 @@
 services:
   traefik:
-    image: traefik:3.5.0
+    image: traefik:latest
     container_name: traefik
+    restart: unless-stopped
     environment:
       - TRAEFIK_AUTH_USERS=${TRAEFIK_AUTH_USERS}
     command:
@@ -10,18 +11,24 @@ services:
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
       - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.websecure.http.tls=true
+      - --providers.file.directory=/etc/traefik/dynamic
+      - --providers.file.watch=true
     ports:
       - 80:80
+      - 443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./certs:/etc/traefik/dynamic:ro
     labels:
       - traefik.enable=true
+      # Dashboard is local-only — served over HTTP on traefik.local, NOT exposed via Cloudflare tunnel
       - traefik.http.routers.dashboard.rule=Host(`traefik.local`)
       - traefik.http.routers.dashboard.entrypoints=web
       - traefik.http.routers.dashboard.middlewares=auth
       - traefik.http.routers.dashboard.service=api@internal
       - traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_AUTH_USERS}
-    restart: no
     networks:
       - traefik_network
 
