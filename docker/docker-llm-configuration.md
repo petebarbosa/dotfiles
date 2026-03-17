@@ -28,11 +28,6 @@ Traefik (:80/:443)                        Host SSH server (:22)         │
 LAN users ──────────────────────────────────────────────────────────────┘
     └─→ Access Traefik directly (no tunnel required on the local network)
 
-PostgreSQL (shared, available on Docker network + localhost:5432 for dev)
-    ├─→ Docker apps: hostname "postgres" on port 5432
-    └─→ Host apps (Rails dev): localhost:5432 (127.0.0.1 only)
-```
-
 **Key principle**: Cloudflared establishes an outbound-only tunnel — no inbound ports
 need to be opened on the router or firewall. Cloudflare's edge receives public traffic
 and forwards it through the tunnel to Traefik, which then routes to the correct service.
@@ -63,11 +58,8 @@ docker/
 │   ├── docker-compose.yml
 │   ├── .env.example
 │   ├── config.yml.example            ← Copy to config.yml and fill in
+│   ├── cert.pem                      ← Gitignored: Cloudflare origin cert (created by tunnel login)
 │   └── <TUNNEL_UUID>.json            ← Gitignored: tunnel credentials
-│
-├── postgres/                         ← Shared PostgreSQL instance
-│   ├── docker-compose.yml
-│   └── .env.example
 │
 ├── homeassistant/                    ← Home automation
 │   ├── docker-compose.yml
@@ -86,16 +78,55 @@ docker/
 
 All `.env` files are gitignored. Each service directory has a `.env.example` that
 documents the expected variables. When configuring for a new user, create each `.env`
-by copying the `.env.example` and ask the user for the real values.
+by copying the `.env.example` and **ask the user to provide or generate** the real values.
+
+> **Important for LLM agents:** Never generate secrets (passwords, tokens) yourself.
+> Always ask the user to generate them using the commands provided in `.env.example` files.
+> This ensures the user has control over their credentials and you don't accidentally
+> expose secrets in conversation logs or tool outputs.
 
 > **Variable name collisions**: `up.sh` sources all `.env` files into a flat namespace.
 > All variable names across all services are intentionally unique. Do not reuse names.
+
+### Subdomain Naming Convention
+
+All public-facing subdomains should use **non-obvious random slugs** instead of descriptive names (e.g., `v4u1t2` instead of `vault`). This reduces discoverability and makes automated scanning less effective.
+
+**Why?**
+- While Cloudflare Access provides strong identity-based authentication, using random slugs adds defense in depth
+- Reduces noise from automated scanners
+- Makes service enumeration and social engineering harder
+
+**Guidelines:**
+- Use 3-8 character random alphanumeric strings
+- Avoid dictionary words or service names
+- Each service gets a unique, unrelated slug
+- Cloudflare Access policies provide authentication regardless of subdomain obscurity
+
+**Example mapping:**
+| Service | Slug | Full Domain |
+|---------|------|-------------|
+| Vaultwarden | `x7k9` | `x7k9.yourdomain.com` |
+| Home Assistant | `m3p2` | `m3p2.yourdomain.com` |
+| Uptime Kuma | `q8n4` | `q8n4.yourdomain.com` |
+| SSH Access | `t3rm` | `t3rm.yourdomain.com` |
+
+**Note:** The SSH slug is configured in `cloudflared/.env` as `CF_SSH_SUBDOMAIN`. All other service hostnames are defined in their respective `.env` files. Each user should generate their own unique random slugs.
 
 ### `traefik/.env`
 
 | Variable | Description | Example |
 |---|---|---|
 | `TRAEFIK_AUTH_USERS` | Basic auth for Traefik dashboard (htpasswd format, `$` doubled) | `admin:$$2y$$05$$...` |
+
+**Generating the password hash:** Since `htpasswd` is not available on all systems (e.g., Arch Linux), use Docker:
+
+```bash
+# Ask the user to run this and provide the output
+docker run --rm httpd:alpine htpasswd -nbB username password | sed -e 's/\$/\$\$/g'
+```
+
+The `sed` command doubles all `$` characters, which is required for Docker Compose environment variable escaping.
 
 ### `vaultwarden/.env`
 
@@ -112,14 +143,6 @@ by copying the `.env.example` and ask the user for the real values.
 | `CF_DOMAIN` | Root domain managed in Cloudflare DNS | `yourdomain.com` |
 | `CF_SSH_SUBDOMAIN` | Non-obvious random slug for SSH access | `t3rm` |
 
-### `postgres/.env`
-
-| Variable | Description | Example |
-|---|---|---|
-| `POSTGRES_USER` | PostgreSQL superuser name | `postgres` |
-| `POSTGRES_PASSWORD` | Superuser password (use a long random string) | `openssl rand -base64 32` |
-| `POSTGRES_DB` | Default database name (admin DB, not for apps) | `postgres` |
-
 ### `homeassistant/.env`
 
 | Variable | Description | Example |
@@ -127,13 +150,28 @@ by copying the `.env.example` and ask the user for the real values.
 | `HA_HOSTNAME` | Hostname for Traefik routing | `ha.yourdomain.com` |
 | `HA_TZ` | Timezone for HA (tz database name) | `America/New_York` |
 
+**Important:** Home Assistant requires explicit configuration to accept requests from a reverse proxy. After the first startup, add this to `homeassistant/config/configuration.yaml`:
+
+```yaml
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.18.0.0/16  # traefik_network subnet (verify with: docker network inspect traefik_network)
+```
+
+Then restart Home Assistant: `docker restart homeassistant`
+
+Without this configuration, Home Assistant will reject all requests from Traefik with HTTP 400/403.
+
 ### `uptimekuma/.env`
 
 | Variable | Description | Example |
 |---|---|---|
 | `UK_HOSTNAME` | Hostname for Traefik routing | `status.yourdomain.com` |
 
---- ## Step-by-Step Setup for a New User
+---
+
+## Step-by-Step Setup for a New User
 
 Follow these steps in order. Steps marked **[Cloudflare Dashboard]** require browser
 access to https://one.dash.cloudflare.com.
@@ -154,7 +192,6 @@ For each service, copy the example and fill in values:
 cp traefik/.env.example traefik/.env
 cp vaultwarden/.env.example vaultwarden/.env
 cp cloudflared/.env.example cloudflared/.env
-cp postgres/.env.example postgres/.env
 cp homeassistant/.env.example homeassistant/.env
 cp uptimekuma/.env.example uptimekuma/.env
 ```
@@ -164,16 +201,43 @@ Then edit each `.env` file with the user's real values. Refer to the
 
 ### 2. Set up the Cloudflare Tunnel
 
-**[Cloudflare Dashboard]**
+**Create credentials using Docker:**
 
-1. Ask the user to go to https://one.dash.cloudflare.com → **Networks** → **Tunnels**
-2. Click **Create a tunnel** → choose **Cloudflared**
-3. Name the tunnel (e.g. `nas-tunnel`)
-4. Click **Next** — you'll see a connector token. **Skip the automatic install** — we're running cloudflared in Docker.
-5. After saving, open the tunnel and copy the **Tunnel ID** (UUID format)
-6. Go to **Configure** → **Credentials** → download the credentials JSON file
-7. Place the JSON file at: `docker/cloudflared/<TUNNEL_UUID>.json`
-8. Set `CF_TUNNEL_ID` in `cloudflared/.env` to the tunnel UUID
+```bash
+cd docker/cloudflared
+
+# The cloudflared container runs as user 'nonroot' (uid 65532).
+# Grant write permissions so it can save credentials:
+chmod 777 .
+
+# Authenticate with Cloudflare (opens browser)
+docker run --rm -it \
+  -v $(pwd):/home/nonroot/.cloudflared \
+  cloudflare/cloudflared:latest tunnel login
+
+# Create the tunnel
+docker run --rm -it \
+  -v $(pwd):/home/nonroot/.cloudflared \
+  cloudflare/cloudflared:latest tunnel create nas-tunnel
+
+# The tunnel UUID file will be saved in current directory
+```
+
+> **Note:** The volume mount uses `/home/nonroot/.cloudflared` (not `/root/.cloudflared`)
+> because the cloudflared Docker image runs as a non-root user.
+
+**Set up credentials file:**
+
+```bash
+# Find the credentials JSON file (UUID format)
+JSON_FILE=$(ls -1 *.json 2>/dev/null | grep -E '^[0-9a-f-]{36}\.json$' | head -1)
+TUNNEL_UUID=$(echo "$JSON_FILE" | sed 's/\.json$//')
+
+# Set the tunnel ID in .env
+sed -i "s/CF_TUNNEL_ID=.*/CF_TUNNEL_ID=${TUNNEL_UUID}/" .env
+```
+
+**Important:** The JSON credentials file is required. Dashboard-created tunnels provide a base64 token (starting with `eyJ...`) which cannot be used directly. The `cloudflared tunnel create` command generates the required JSON file.
 
 ### 3. Create `cloudflared/config.yml`
 
@@ -184,9 +248,9 @@ cp cloudflared/config.yml.example cloudflared/config.yml
 ```
 
 Edit `config.yml` and replace:
-- `<TUNNEL_UUID>` → the UUID from step 2
+- `<TUNNEL_UUID>` → the UUID from step 2 (appears twice: tunnel ID and credentials-file path)
 - `<YOUR_DOMAIN>` → the user's domain (e.g. `yourdomain.com`)
-- `<YOUR_SSH_SLUG>` → the value of `CF_SSH_SUBDOMAIN` from `cloudflared/.env`
+- Each `<YOUR_*_SLUG>` → the corresponding random subdomain from each service's `.env`
 
 The final `config.yml` should look like:
 ```yaml
@@ -194,19 +258,19 @@ tunnel: a1b2c3d4-e5f6-7890-abcd-ef1234567890
 credentials-file: /etc/cloudflared/a1b2c3d4-e5f6-7890-abcd-ef1234567890.json
 
 ingress:
-  - hostname: sudomain.yourdomain.com
+  - hostname: x7k9.yourdomain.com      # Vaultwarden (matches VW_HOSTNAME)
     service: https://traefik:443
     originRequest:
       noTLSVerify: true
-  - hostname: sudomain.yourdomain.com
+  - hostname: m3p2.yourdomain.com      # Home Assistant (matches HA_HOSTNAME)
     service: https://traefik:443
     originRequest:
       noTLSVerify: true
-  - hostname: sudomain.yourdomain.com
+  - hostname: q8n4.yourdomain.com      # Uptime Kuma (matches UK_HOSTNAME)
     service: https://traefik:443
     originRequest:
       noTLSVerify: true
-  - hostname: sudomain.yourdomain.com
+  - hostname: t3rm.yourdomain.com      # SSH (matches CF_SSH_SUBDOMAIN)
     service: ssh://localhost:22
   - service: http_status:404
 ```
@@ -262,7 +326,7 @@ The script will:
 docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'
 ```
 
-Expected containers: `traefik`, `vaultwarden`, `cloudflared`, `postgres`, `homeassistant`, `uptimekuma`
+Expected containers: `traefik`, `vaultwarden`, `cloudflared`, `homeassistant`, `uptimekuma`
 
 Check Cloudflare tunnel status:
 ```bash
@@ -270,6 +334,58 @@ docker logs cloudflared --tail 20
 ```
 
 You should see: `Registered tunnel connection` (repeated 4 times for 4 Cloudflare PoPs).
+
+### 8. Create DNS routes for each hostname
+
+The tunnel is running, but Cloudflare DNS doesn't know about it yet. Create CNAME records for each hostname:
+
+```bash
+cd docker/cloudflared
+
+# Get tunnel UUID from .env
+TUNNEL_UUID=$(grep CF_TUNNEL_ID .env | cut -d= -f2)
+
+# Create DNS routes for each hostname (replace with actual hostnames from .env files)
+docker run --rm \
+  -v $(pwd):/home/nonroot/.cloudflared \
+  cloudflare/cloudflared:latest tunnel route dns $TUNNEL_UUID <VW_HOSTNAME>
+
+docker run --rm \
+  -v $(pwd):/home/nonroot/.cloudflared \
+  cloudflare/cloudflared:latest tunnel route dns $TUNNEL_UUID <HA_HOSTNAME>
+
+docker run --rm \
+  -v $(pwd):/home/nonroot/.cloudflared \
+  cloudflare/cloudflared:latest tunnel route dns $TUNNEL_UUID <UK_HOSTNAME>
+
+docker run --rm \
+  -v $(pwd):/home/nonroot/.cloudflared \
+  cloudflare/cloudflared:latest tunnel route dns $TUNNEL_UUID <CF_SSH_SUBDOMAIN>.<CF_DOMAIN>
+```
+
+Each command should respond with: `<hostname> is now configured to route to your tunnel`
+
+**Note:** DNS propagation is usually instant for Cloudflare-managed domains, but local DNS resolvers may cache negative lookups. See the Troubleshooting section for testing with `--resolve`.
+
+### 9. Verify services are accessible via public URLs
+
+Test each service through the Cloudflare tunnel:
+
+```bash
+# Get Cloudflare proxy IPs for your domain
+curl -sH "accept: application/dns-json" \
+  "https://cloudflare-dns.com/dns-query?name=<VW_HOSTNAME>&type=A" | \
+  grep -o '"data":"[^"]*"' | head -1
+
+# Test with resolved IP (bypasses local DNS cache)
+CF_IP="<IP_FROM_ABOVE>"
+curl -s -w "%{http_code}" -o /dev/null --resolve "<VW_HOSTNAME>:443:$CF_IP" "https://<VW_HOSTNAME>"
+```
+
+Expected responses:
+- Vaultwarden: `200`
+- Home Assistant: `302` (redirect to onboarding)
+- Uptime Kuma: `200` or `302` (redirect to setup)
 
 ---
 
@@ -384,21 +500,7 @@ Add before the catch-all line:
       noTLSVerify: true
 ```
 
-### 5. Using the shared PostgreSQL instance
-
-If the service needs PostgreSQL:
-
-```bash
-# Create a database for the new service
-docker exec -it postgres psql -U postgres -c "CREATE DATABASE myservice;"
-```
-
-Connection string for the service:
-```
-postgresql://postgres:POSTGRES_PASSWORD@postgres:5432/myservice
-```
-
-### 6. Restart the stack
+### 5. Restart the stack
 
 ```bash
 ./up.sh up -d
@@ -406,128 +508,6 @@ postgresql://postgres:POSTGRES_PASSWORD@postgres:5432/myservice
 
 `up.sh` automatically discovers all `docker-compose.yml` files under `docker/`.
 No manual registration is needed.
-
----
-
-## PostgreSQL Development Access
-
-### Architecture
-
-PostgreSQL is configured for dual access:
-- **Docker containers**: Connect via hostname `postgres:5432` on `traefik_network`
-- **Host development**: Connect via `localhost:5432` (bound to 127.0.0.1 only)
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                      Your Host Machine                  │
-│                                                         │
-│  ┌─────────────────┐      ┌─────────────────────────┐   │
-│  │   Rails (host)  │      │    Docker Network       │   │
-│  │   development   │      │   (traefik_network)     │   │
-│  │                 │      │                         │   │
-│  │  Rails server   │◄────►│  ┌─────────────────┐    │   │
-│  │  (localhost)    │      │  │   PostgreSQL    │    │   │
-│  │                 │      │  │   (postgres)    │    │   │
-│  │  Connection:    │      │  │                 │    │   │
-│  │  localhost:5432 │◄────►│  │  Port 5432      │    │   │
-│  │                 │      │  │  (127.0.0.1)    │    │   │
-│  └─────────────────┘      │  └─────────────────┘    │   │
-│                           └─────────────────────────┘   │
-│                                    │                    │
-│                           ┌────────┴────────┐           │
-│                           ▼                 ▼           │
-│                    ┌────────────┐    ┌────────────┐     │
-│                    │  Docker    │    │  Docker    │     │
-│                    │   App 1    │    │   App 2    │     │
-│                    │  (hostname:│    │  (hostname:│     │
-│                    │  postgres) │    │  postgres) │     │
-│                    └────────────┘    └────────────┘     │
-└─────────────────────────────────────────────────────────┘
-```
-
-### Database Isolation Strategy
-
-Each application gets **dedicated databases and users** within the single PostgreSQL instance:
-
-```sql
--- Create user for myapp1 (superuser creates this)
-CREATE USER myapp1 WITH PASSWORD 'secure_random_password';
-
--- Create databases for myapp1
-CREATE DATABASE myapp1_development OWNER myapp1;
-CREATE DATABASE myapp1_test OWNER myapp1;
-
--- Create user for myapp2
-CREATE USER myapp2 WITH PASSWORD 'another_secure_password';
-
--- Create databases for myapp2
-CREATE DATABASE myapp2_development OWNER myapp2;
-CREATE DATABASE myapp2_test OWNER myapp2;
-```
-
-**Benefits:**
-- Users cannot access other users' databases
-- Applications are isolated at the database level
-- Single PostgreSQL instance (less resource overhead)
-
-### Development Setup
-
-**Create databases and user**
-
-```bash
-# Replace 'myapp' with your application name
-# Replace 'secure_password' with a generated password
-
-docker exec -it postgres psql -U postgres -c "CREATE USER myapp WITH PASSWORD 'secure_password';"
-docker exec -it postgres psql -U postgres -c "CREATE DATABASE myapp_development OWNER myapp;"
-docker exec -it postgres psql -U postgres -c "CREATE DATABASE myapp_test OWNER myapp;"
-
-# Grant privileges (optional, owner has full access by default)
-docker exec -it postgres psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE myapp_development TO myapp;"
-docker exec -it postgres psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE myapp_test TO myapp;"
-```
-
-### PostgreSQL Commands Reference
-
-```bash
-# Connect to PostgreSQL as superuser
-docker exec -it postgres psql -U postgres
-
-# List all databases
-\l
-
-# List all users
-\du
-
-# Create database
-create database myapp_development;
-
-# Create user with password
-create user myapp with password 'password';
-
-# Grant ownership
-alter database myapp_development owner to myapp;
-
-# Drop database (careful!)
-drop database myapp_development;
-
-# Connect to specific database
-\c myapp_development
-
-# List tables in current database
-\dt
-
-# Exit psql
-\q
-```
-
-### Security Notes
-
-- Port 5432 is bound to `127.0.0.1` only (localhost), not exposed to LAN or internet
-- Each application should use its own database user
-- Never share database users between applications
-- Store passwords in environment variables, not in code
-- `.env` files are gitignored by default
 
 ---
 
@@ -546,10 +526,16 @@ drop database myapp_development;
 | Vaultwarden | 80 | — | Via Traefik only |
 | Home Assistant | 8123 | — | Via Traefik only |
 | Uptime Kuma | 3001 | — | Via Traefik only |
-| PostgreSQL | 5432 | 5432 (127.0.0.1 only) | Docker network + localhost |
 | Cloudflared | — | — | Outbound tunnel only |
 
 ## Troubleshooting
+
+### Home Assistant returns 400 or 403
+Home Assistant blocks requests from reverse proxies by default. Check the logs:
+```bash
+docker logs homeassistant 2>&1 | grep -i "reverse proxy"
+```
+If you see "A request from a reverse proxy was received... but your HTTP integration is not set-up for reverse proxies", add the `http:` configuration block to `homeassistant/config/configuration.yaml` as described in the Environment Variable Reference section above.
 
 ### Tunnel not connecting
 ```bash
@@ -563,6 +549,15 @@ or credentials JSON filename doesn't match the tunnel UUID.
 2. Check Traefik has picked up the service: visit `http://traefik.local` on LAN
 3. Verify the hostname in `config.yml` matches the `traefik.http.routers.*.rule` label
 4. Check service is running: `docker ps`
+
+**DNS cache issues:** Local DNS resolvers may cache negative lookups. To bypass local DNS and test directly against Cloudflare:
+```bash
+# Get the current Cloudflare IPs for your domain
+curl -sH "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=subdomain.yourdomain.com&type=A"
+
+# Test with --resolve to bypass local DNS
+curl -s -w "%{http_code}" -o /dev/null --resolve "subdomain.yourdomain.com:443:CLOUDFLARE_IP" "https://subdomain.yourdomain.com"
+```
 
 ### Restarting a single service
 ```bash

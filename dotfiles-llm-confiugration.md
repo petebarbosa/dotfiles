@@ -3,7 +3,7 @@
 ## Overview
 
 This repository contains personal dotfiles for:
-- Self-hosted NAS services (Traefik, PostgreSQL, Home Assistant, etc.)
+- Self-hosted NAS services (Traefik, Home Assistant, etc.)
 - OpenCode AI agent configurations with custom tools and skills
 - Keyboard remapping configurations for Hyprland
 
@@ -25,7 +25,6 @@ Present the following categories and let the user select which components to ins
 #### Infrastructure Components
 ```
 ☐ Traefik          - Reverse proxy with automatic TLS
-☐ PostgreSQL       - Shared database (Docker network only, no host port)
 ☐ Cloudflared      - Secure Cloudflare tunnel (outbound-only, no open ports)
 ```
 
@@ -70,7 +69,6 @@ For each selected component, verify and install prerequisites:
 4. Run `./up.sh logs -f` to verify startup
 
 **Important Notes:**
-- PostgreSQL has no host port exposed (Docker network only)
 - Cloudflared requires `config.yml` (see `config.yml.example`)
 
 #### OpenCode Configuration
@@ -114,10 +112,6 @@ For each selected component, verify and install prerequisites:
 - Check Cloudflare tunnel token is valid
 - Ensure `cloudflared_network` has proper labels for Traefik discovery
 
-**PostgreSQL connection issues:**
-- Remember: No host port exposed, access only via Docker network
-- Applications must be on `traefik_network` to reach PostgreSQL
-
 **keyd not working:**
 - Verify keyd service is running: `sudo systemctl status keyd`
 - Check config syntax: `sudo keyd -m` for debug mode
@@ -154,7 +148,6 @@ LAN users → Direct access to Traefik (no tunnel needed)
 **Security Features:**
 - Outbound-only tunnel (no open ports)
 - Identity-based SSH access via Cloudflare Access
-- PostgreSQL isolated to Docker network
 - Traefik dashboard restricted to LAN
 
 ## Emergency Procedures
