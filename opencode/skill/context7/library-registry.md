@@ -4,15 +4,6 @@
 
 This file lists external libraries/frameworks that should use **ExternalScout** (via Context7) for live documentation instead of relying on potentially outdated training data.
 
-## When to Use This
-
-**ContextScout** checks this list when:
-1. User asks about a library/framework
-2. No internal context exists in `/home/petebarbosa/.config/opencode/context/development/frameworks/`
-3. Query matches a library name below
-
-**Action**: Recommend **ExternalScout** subagent
-
 ---
 
 ## Supported Libraries
@@ -183,7 +174,7 @@ This file lists external libraries/frameworks that should use **ExternalScout** 
 
 ## Detection Patterns
 
-ContextScout and ExternalScout should match queries containing:
+ExternalScout should match queries containing:
 - Library name (case-insensitive)
 - Common variations (e.g., "next.js" vs "nextjs")
 - Package names (e.g., "@tanstack/react-query")

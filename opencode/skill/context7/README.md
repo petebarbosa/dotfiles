@@ -43,25 +43,21 @@ See `SKILLS.MD` for detailed API documentation.
 ## Supported Libraries
 
 See `library-registry.md` for the complete list of supported libraries including:
-- **Database & ORM**: Drizzle, Prisma
+- **Database & ORM**: Drizzle, Prisma, PostgreSQL
 - **Authentication**: Better Auth, NextAuth.js, Clerk
-- **Frontend**: Next.js, React, TanStack Query/Router/Start
-- **Infrastructure**: Cloudflare Workers, AWS Lambda, Vercel
+- **Frontend**: React, Vite
+- **Infrastructure**: Cloudflare Workers, AWS Lambda, Vercel, Sidekiq
 - **UI**: Shadcn/ui, Radix UI, Tailwind CSS
 - **State**: Zustand, Jotai
 - **Validation**: Zod, React Hook Form
-- **Testing**: Vitest, Playwright
+- **Testing**: Vitest, Playwright, Rspec
 
 ## Workflow
 
 ```
 User Query
     ↓
-ContextScout (searches internal context)
-    ↓
-No internal context found
-    ↓
-ContextScout recommends ExternalScout
+ExternalScout
     ↓
 ExternalScout invoked
     ├─ Reads library-registry.md
@@ -99,4 +95,3 @@ To add a new library to the registry:
 ## Related
 
 - **ExternalScout**: `.opencode/agent/subagents/core/external-scout.md`
-- **ContextScout**: `.opencode/agent/subagents/core/contextscout.md`
