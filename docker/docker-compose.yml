@@ -6,8 +6,6 @@
 include:
   - path: cloudflared/docker-compose.yml
   - path: homeassistant/docker-compose.yml
-  - path: postgres/docker-compose.yml
-  - path: redis/docker-compose.yml
   - path: traefik/docker-compose.yml
   - path: uptimekuma/docker-compose.yml
   - path: vaultwarden/docker-compose.yml
