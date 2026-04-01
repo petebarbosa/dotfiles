@@ -81,12 +81,10 @@
     "build": {
       "description": "Build agent - hidden from autocomplete",
       "mode": "primary",
-      "hidden": true
     },
     "plan": {
       "description": "Plan agent - hidden from autocomplete",
       "mode": "primary",
-      "hidden": true
     },
     "general": {
       "description": "General-purpose agent for researching complex questions and executing multi-step tasks",
@@ -118,40 +116,10 @@
       "mode": "subagent",
       "model": "opencode/minimax-m2.5-free"
     },
-    "OpenDevopsSpecialist": {
-      "description": "DevOps specialist for CI/CD, infrastructure as code, deployment",
-      "mode": "subagent",
-      "model": "opencode/kimi-k2.5"
-    },
-    "OpenFrontendSpecialist": {
-      "description": "Frontend UI design specialist for design systems, themes, animations",
-      "mode": "subagent",
-      "model": "opencode/kimi-k2.5"
-    },
-    "ContextOrganizer": {
-      "description": "Organizes and generates context files for optimal knowledge management",
-      "mode": "subagent",
-      "model": "opencode/minimax-m2.5-free"
-    },
     "DocWriter": {
       "description": "Documentation authoring agent",
       "mode": "subagent",
       "model": "opencode/minimax-m2.5-free"
-    },
-    "ExternalScout": {
-      "description": "Fetches live, version-specific documentation for libraries and frameworks",
-      "mode": "subagent",
-      "model": "opencode/minimax-m2.5-free"
-    },
-    "ContextScout": {
-      "description": "Discovers and recommends context files from .opencode/context/",
-      "mode": "subagent",
-      "model": "opencode/minimax-m2.5-free"
-    },
-    "TaskManager": {
-      "description": "JSON-driven task breakdown specialist with dependency tracking",
-      "mode": "subagent",
-      "model": "opencode/kimi-k2.5"
     }
   }
 }
