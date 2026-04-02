@@ -3,7 +3,7 @@
   "plugin": [
     "opencode-antigravity-auth@latest",
     "opencode-mystatus",
-    "@howaboua/opencode-planning-toolkit@latest"
+    "superpowers@git+https://github.com/obra/superpowers.git"
   ],
   "provider": {
     "ollama": {
@@ -93,31 +93,6 @@
     },
     "explore": {
       "description": "Read-only subagent for fast codebase exploration at different thoroughness levels",
-      "mode": "subagent",
-      "model": "opencode/minimax-m2.5-free"
-    },
-    "CoderAgent": {
-      "description": "Executes coding subtasks in sequence, ensuring completion as specified",
-      "mode": "subagent",
-      "model": "opencode/kimi-k2.5"
-    },
-    "CodeReviewer": {
-      "description": "Code review, security, and quality assurance agent",
-      "mode": "subagent",
-      "model": "opencode/kimi-k2.5"
-    },
-    "BuildAgent": {
-      "description": "Type check and build validation agent",
-      "mode": "subagent",
-      "model": "opencode/minimax-m2.5-free"
-    },
-    "TestEngineer": {
-      "description": "Test authoring and TDD agent",
-      "mode": "subagent",
-      "model": "opencode/minimax-m2.5-free"
-    },
-    "DocWriter": {
-      "description": "Documentation authoring agent",
       "mode": "subagent",
       "model": "opencode/minimax-m2.5-free"
     }
